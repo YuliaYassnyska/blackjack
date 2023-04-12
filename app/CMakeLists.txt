@@ -4,6 +4,8 @@ set(PROJECT_SOURCES
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
+    src/mainView/mainview.h
+    src/mainView/mainview.cpp
     src/gameScene/gamescene.h
     src/gameScene/gamescene.cpp
 )
