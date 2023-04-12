@@ -2,6 +2,7 @@
 #include "gameScene/gamescene.h"
 #include "mainView/mainview.h"
 
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 
@@ -21,4 +22,7 @@ void MainWindow::initWindow()
     setFixedSize(750, 500);
     _view->setScene(_scene);
     setCentralWidget(_view);
+    _scene->setSceneRect(rect());
+    QPixmap pixmap{ QPixmap{ ":/images/background/resources/grass.jpg" }.scaled(size()) };
+    _scene->setBackgroundBrush(pixmap);
 }
