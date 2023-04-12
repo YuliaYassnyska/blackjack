@@ -2,12 +2,20 @@
 
 #include <QMainWindow>
 
-class MainWindow : public QMainWindow {
-  Q_OBJECT
+class QGraphicsView;
+class QGraphicsScene;
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = nullptr);
-  ~MainWindow();
+    explicit MainWindow(QWidget *parent);
+    ~MainWindow();
 
-  void initWindow();
+    void initWindow();
+
+private:
+    QGraphicsView *_view{ nullptr };
+    QGraphicsScene *_scene{ nullptr };
 };
