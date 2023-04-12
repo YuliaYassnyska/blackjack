@@ -8,6 +8,7 @@ set(PROJECT_SOURCES
     src/mainView/mainview.cpp
     src/gameScene/gamescene.h
     src/gameScene/gamescene.cpp
+    resources.qrc
 )
 
 add_executable(${PROJECT_NAME}
