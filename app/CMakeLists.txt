@@ -9,6 +9,9 @@ set(PROJECT_SOURCES
     src/gameScene/gamescene.h
     src/gameScene/gamescene.cpp
     resources.qrc
+    src/gameScene/items/cards/characterCard/charactercard.h
+    src/gameScene/items/cards/characterCard/charactercard.cpp
+    src/gameScene/items/cards/icard.h
 )
 
 add_executable(${PROJECT_NAME}
@@ -26,6 +29,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 include_directories(src)
+include_directories(src/gameScene)
 
 install(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION .

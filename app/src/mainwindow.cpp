@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "gameScene/gamescene.h"
+#include "items/cards/digitCard/digitcard.h"
 #include "mainView/mainview.h"
 
 #include <QGraphicsPixmapItem>
@@ -10,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), _view{ new MainView(this) }, _scene{ new GameScene(this) }
 {
     initWindow();
+    auto item{ new DigitCard("2", ":/images/suit/resources/spades.svg") };
+    _scene->addItem(item);
+    item->moveBy(_scene->width() / 3, _scene->height() / 3);
 }
 
 MainWindow::~MainWindow()
@@ -19,7 +23,7 @@ MainWindow::~MainWindow()
 void MainWindow::initWindow()
 {
     setWindowTitle(QStringLiteral("blackjack"));
-    setFixedSize(750, 500);
+    setMinimumSize(750, 500);
     _view->setScene(_scene);
     setCentralWidget(_view);
     _scene->setSceneRect(rect());
