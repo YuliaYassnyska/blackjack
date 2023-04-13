@@ -3,18 +3,18 @@
 #include <QBitmap>
 #include <QPainter>
 
-DigitCard::DigitCard(const QString &text, const QString &imagePath)
-    : QGraphicsItem(), _imagePath{ imagePath }, _text{ text }
+DigitCard::DigitCard(const QString &text, const QString &imageFrontPath,
+                     const QString &imageBackPath)
+    : QGraphicsItem(),
+      _imageFrontPath{ imageFrontPath },
+      _text{ text },
+      _imageBackPath{ imageBackPath }
 {
 }
 
 void DigitCard::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/,
                       QWidget * /*widget*/)
 {
-    painter->setRenderHint(QPainter::Antialiasing);
-    painter->setBackgroundMode(Qt::OpaqueMode);
-
-    painter->setBackground(QBrush(Qt::white));
 
     const int penWidth{ 1 };
     const int cornerRadius{ 10 };
@@ -22,12 +22,26 @@ void DigitCard::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*opti
     QRect borderRect{ QRect{ rect.x() + penWidth, rect.y() + penWidth, rect.width() - penWidth * 2,
                              rect.height() - penWidth * 2 } };
 
-    QSize suitSize{ borderRect.size().width() / 2, borderRect.size().height() / 2 };
-    QPixmap pixmap{ QPixmap{ _imagePath }.scaled(suitSize) };
+    if (_isOpen)
+        paintFrontSide(painter, borderRect, cornerRadius);
+    else
+        paintBackSide(painter, borderRect, cornerRadius);
+}
+
+void DigitCard::paintFrontSide(QPainter *painter, const QRect &borderRect, int cornerRadius)
+{
+
+    painter->setRenderHint(QPainter::Antialiasing);
+    painter->setBackgroundMode(Qt::OpaqueMode);
+
+    painter->setBackground(QBrush(Qt::white));
 
     QBrush brush{ Qt::white };
     painter->setBrush(brush);
     painter->drawRoundedRect(borderRect, cornerRadius, cornerRadius);
+
+    QSize suitSize{ borderRect.size().width() / 2, borderRect.size().height() / 2 };
+    QPixmap pixmap{ QPixmap{ _imageFrontPath }.scaled(suitSize) };
 
     QPointF suitStart{ (boundingRect().width() - suitSize.width()) / 2,
                        (boundingRect().height() - suitSize.height()) / 2 };
@@ -45,6 +59,16 @@ void DigitCard::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*opti
     painter->drawText(textRect, Qt::AlignTop | Qt::AlignLeft, _text);
 }
 
+void DigitCard::paintBackSide(QPainter *painter, const QRect &borderRect, int cornerRadius)
+{
+
+    QPixmap pixmap{ QPixmap{ _imageBackPath }.scaled(borderRect.size()) };
+
+    QBrush brush{ pixmap };
+    painter->setBrush(brush);
+    painter->drawRoundedRect(borderRect, cornerRadius, cornerRadius);
+}
+
 QRectF DigitCard::boundingRect() const
 {
     return QRectF(0, 0, 120, 180);
@@ -52,8 +76,10 @@ QRectF DigitCard::boundingRect() const
 
 void DigitCard::open()
 {
+    _isOpen = true;
 }
 
-void DigitCard::clode()
+void DigitCard::close()
 {
+    _isOpen = false;
 }

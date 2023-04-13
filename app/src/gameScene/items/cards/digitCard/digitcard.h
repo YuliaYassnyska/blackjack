@@ -9,12 +9,12 @@ class QPaintEvent;
 class DigitCard : public ICard, public QGraphicsItem
 {
 public:
-    DigitCard(const QString &text, const QString &imagePath);
+    DigitCard(const QString &text, const QString &imageFrontPath, const QString &imageBackPath);
 
     QRectF boundingRect() const override;
 
     void open() override;
-    void clode() override;
+    void close() override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/,
@@ -22,5 +22,11 @@ protected:
 
 private:
     QString _text;
-    QString _imagePath;
+    QString _imageFrontPath;
+    QString _imageBackPath;
+    bool _isOpen{ false };
+
+    void paintFrontSide(QPainter *painter, const QRect &borderRect, int cornerRadius);
+
+    void paintBackSide(QPainter *painter, const QRect &borderRect, int cornerRadius);
 };

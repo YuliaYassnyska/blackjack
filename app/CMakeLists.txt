@@ -9,6 +9,8 @@ set(PROJECT_SOURCES
     src/gameScene/gamescene.h
     src/gameScene/gamescene.cpp
     resources.qrc
+    src/gameScene/items/cards/digitCard/digitcard.h
+    src/gameScene/items/cards/digitCard/digitcard.cpp
     src/gameScene/items/cards/characterCard/charactercard.h
     src/gameScene/items/cards/characterCard/charactercard.cpp
     src/gameScene/items/cards/icard.h
