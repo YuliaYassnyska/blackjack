@@ -4,6 +4,7 @@
     </qresource>
     <qresource prefix="/images/suit">
         <file>resources/spades.svg</file>
+        <file>resources/spades/jack.png</file>
     </qresource>
     <qresource prefix="/images/backSide">
         <file>resources/black_back_side.jpg</file>

@@ -1,15 +1,15 @@
 #pragma once
 
-#include <items/cards/icard.h>
+#include <items/cardItem/icard.h>
 
 #include <QGraphicsItem>
 
 class QPaintEvent;
 
-class DigitCard : public ICard, public QGraphicsItem
+class CardItem : public ICard, public QGraphicsItem
 {
 public:
-    DigitCard(const QString &text, const QString &imageFrontPath, const QString &imageBackPath);
+    CardItem(const QString &imageFrontPath, const QString &imageBackPath);
 
     QRectF boundingRect() const override;
 
@@ -21,9 +21,8 @@ protected:
                QWidget *widget = nullptr) override;
 
 private:
-    QString _text;
-    QString _imageFrontPath;
-    QString _imageBackPath;
+    QPixmap _imageFront;
+    QPixmap _imageBack;
     bool _isOpen{ false };
 
     void paintFrontSide(QPainter *painter, const QRect &borderRect, int cornerRadius);
