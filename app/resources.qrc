@@ -2,11 +2,69 @@
     <qresource prefix="/images/background">
         <file>resources/grass.jpg</file>
     </qresource>
-    <qresource prefix="/images/suit">
+    <qresource prefix="/images/slightMode/clubs">
         <file>resources/spades.svg</file>
         <file>resources/spades/jack.png</file>
+        <file>resources/lightMode/clubs/ace.png</file>
+        <file>resources/lightMode/clubs/eight.png</file>
+        <file>resources/lightMode/clubs/five.png</file>
+        <file>resources/lightMode/clubs/four.png</file>
+        <file>resources/lightMode/clubs/jack.png</file>
+        <file>resources/lightMode/clubs/king.png</file>
+        <file>resources/lightMode/clubs/nine.png</file>
+        <file>resources/lightMode/clubs/queen.png</file>
+        <file>resources/lightMode/clubs/seven.png</file>
+        <file>resources/lightMode/clubs/six.png</file>
+        <file>resources/lightMode/clubs/ten.png</file>
+        <file>resources/lightMode/clubs/three.png</file>
+        <file>resources/lightMode/clubs/two.png</file>
     </qresource>
-    <qresource prefix="/images/backSide">
-        <file>resources/black_back_side.jpg</file>
+    <qresource prefix="/images/lightMode/backSide">
+        <file>resources/lightMode/black_back_side.jpg</file>
+    </qresource>
+    <qresource prefix="/images/lightMode/diamonds">
+        <file>resources/lightMode/diamonds/ace.png</file>
+        <file>resources/lightMode/diamonds/eight.png</file>
+        <file>resources/lightMode/diamonds/five.png</file>
+        <file>resources/lightMode/diamonds/four.png</file>
+        <file>resources/lightMode/diamonds/jack.png</file>
+        <file>resources/lightMode/diamonds/king.png</file>
+        <file>resources/lightMode/diamonds/nine.png</file>
+        <file>resources/lightMode/diamonds/queen.png</file>
+        <file>resources/lightMode/diamonds/seven.png</file>
+        <file>resources/lightMode/diamonds/six.png</file>
+        <file>resources/lightMode/diamonds/ten.png</file>
+        <file>resources/lightMode/diamonds/three.png</file>
+        <file>resources/lightMode/diamonds/two.png</file>
+    </qresource>
+    <qresource prefix="/images/lightMode/hearts">
+        <file>resources/lightMode/hearts/ace.png</file>
+        <file>resources/lightMode/hearts/eight.png</file>
+        <file>resources/lightMode/hearts/five.png</file>
+        <file>resources/lightMode/hearts/four.png</file>
+        <file>resources/lightMode/hearts/jack.png</file>
+        <file>resources/lightMode/hearts/king.png</file>
+        <file>resources/lightMode/hearts/nine.png</file>
+        <file>resources/lightMode/hearts/queen.png</file>
+        <file>resources/lightMode/hearts/seven.png</file>
+        <file>resources/lightMode/hearts/six.png</file>
+        <file>resources/lightMode/hearts/ten.png</file>
+        <file>resources/lightMode/hearts/three.png</file>
+        <file>resources/lightMode/hearts/two.png</file>
+    </qresource>
+    <qresource prefix="/images/lightMode/spades">
+        <file>resources/lightMode/spades/ace.png</file>
+        <file>resources/lightMode/spades/eight.png</file>
+        <file>resources/lightMode/spades/five.png</file>
+        <file>resources/lightMode/spades/four.png</file>
+        <file>resources/lightMode/spades/jack.png</file>
+        <file>resources/lightMode/spades/king.png</file>
+        <file>resources/lightMode/spades/nine.png</file>
+        <file>resources/lightMode/spades/Queen.png</file>
+        <file>resources/lightMode/spades/seven.png</file>
+        <file>resources/lightMode/spades/six.png</file>
+        <file>resources/lightMode/spades/ten.png</file>
+        <file>resources/lightMode/spades/three.png</file>
+        <file>resources/lightMode/spades/two.png</file>
     </qresource>
 </RCC>
