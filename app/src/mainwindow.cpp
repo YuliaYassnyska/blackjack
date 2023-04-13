@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "gameScene/gamescene.h"
-#include "items/cardItem/carditem.h"
+#include "items/cardItem/cardItem.h"
 #include "mainView/mainview.h"
 
 #include <QGraphicsPixmapItem>
@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), _view{ new MainView(this) }, _scene{ new GameScene(this) }
 {
     initWindow();
-    auto item{ new CardItem(":/images/suit/resources/spades/jack.png",
-                            ":/images/backSide/resources/black_back_side.jpg") };
-    _scene->addItem(item);
-    item->moveBy(_scene->width() / 3, _scene->height() / 3);
+    //    auto item{ new CardItem(":/images/suit/resources/spades/jack.png",
+    //                            ":/images/backSide/resources/black_back_side.jpg") };
+    //    _scene->addItem(item);
+    //    item->moveBy(_scene->width() / 3, _scene->height() / 3);
 }
 
 MainWindow::~MainWindow()
