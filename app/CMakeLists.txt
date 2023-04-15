@@ -12,6 +12,8 @@ set(PROJECT_SOURCES
     src/gameScene/items/cardItem/carditem.h
     src/gameScene/items/cardItem/carditem.cpp
     src/gameScene/items/cardItem/icard.h
+    src/enums/cardEnums/cardenums.cpp
+    src/enums/cardEnums/cardenums.h
 )
 
 add_executable(${PROJECT_NAME}
