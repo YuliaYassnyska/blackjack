@@ -2,10 +2,13 @@
 
 #include <QPainter>
 
-CardItem::CardItem(const QString &imageFrontPath, const QString &imageBackPath)
+namespace Scene
+{
+CardItem::CardItem(const QString &themePath, const QString &imageFrontPath,
+                   const QString &imageBackPath)
     : QGraphicsItem(),
-      _imageFront{ QPixmap{ imageFrontPath }.scaled(boundingRect().size().toSize()) },
-      _imageBack{ QPixmap{ imageBackPath }.scaled(boundingRect().size().toSize()) }
+      _imageFront{ QPixmap{ themePath + imageFrontPath }.scaled(boundingRect().size().toSize()) },
+      _imageBack{ QPixmap{ themePath + imageBackPath }.scaled(boundingRect().size().toSize()) }
 {
 }
 
@@ -53,3 +56,4 @@ void CardItem::close()
 {
     _isOpen = false;
 }
+} // namespace Scene

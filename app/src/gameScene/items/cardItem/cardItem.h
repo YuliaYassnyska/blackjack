@@ -6,10 +6,12 @@
 
 class QPaintEvent;
 
+namespace Scene
+{
 class CardItem : public ICard, public QGraphicsItem
 {
 public:
-    CardItem(const QString &imageFrontPath, const QString &imageBackPath);
+    CardItem(const QString &themePath, const QString &imageFrontPath, const QString &imageBackPath);
 
     QRectF boundingRect() const override;
 
@@ -23,9 +25,10 @@ protected:
 private:
     QPixmap _imageFront;
     QPixmap _imageBack;
-    bool _isOpen{ false };
+    bool _isOpen{ true };
 
     void paintFrontSide(QPainter *painter, const QRect &borderRect, int cornerRadius);
 
     void paintBackSide(QPainter *painter, const QRect &borderRect, int cornerRadius);
 };
+} // namespace Scene

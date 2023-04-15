@@ -14,6 +14,9 @@ set(PROJECT_SOURCES
     src/gameScene/items/cardItem/icard.h
     src/enums/cardEnums/cardenums.cpp
     src/enums/cardEnums/cardenums.h
+    src/gameScene/items/factory/cardfactory.h
+    src/gameScene/items/factory/cardfactory.cpp
+    src/gameScene/items/factory/icardfactory.h
     src/model/items/carditem.h
     src/model/items/carditem.cpp
     src/model/items/icard.h
