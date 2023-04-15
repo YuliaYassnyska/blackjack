@@ -9,6 +9,21 @@ set(PROJECT_SOURCES
     src/gameScene/gamescene.h
     src/gameScene/gamescene.cpp
     resources.qrc
+    src/gameScene/items/cardItem/carditem.h
+    src/gameScene/items/cardItem/carditem.cpp
+    src/gameScene/items/cardItem/icard.h
+    src/enums/cardEnums/cardenums.cpp
+    src/enums/cardEnums/cardenums.h
+    src/gameScene/items/factory/cardfactory.h
+    src/gameScene/items/factory/cardfactory.cpp
+    src/gameScene/items/factory/icardfactory.h
+    src/model/items/carditem.h
+    src/model/items/carditem.cpp
+    src/model/items/icard.h
+    src/model/controller/modelcontroller.cpp
+    src/model/controller/modelcontroller.h
+    src/gameScene/controller/scenecontroller.h
+    src/gameScene/controller/scenecontroller.cpp
 )
 
 add_executable(${PROJECT_NAME}
@@ -26,6 +41,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 include_directories(src)
+include_directories(src/gameScene)
 
 install(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION .
