@@ -22,6 +22,8 @@ set(PROJECT_SOURCES
     src/model/items/icard.h
     src/model/controller/modelcontroller.cpp
     src/model/controller/modelcontroller.h
+    src/gameScene/controller/scenecontroller.h
+    src/gameScene/controller/scenecontroller.cpp
 )
 
 add_executable(${PROJECT_NAME}
