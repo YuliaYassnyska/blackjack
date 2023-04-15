@@ -1,20 +1,28 @@
 #include "mainwindow.h"
+#include "gameScene/controller/scenecontroller.h"
 #include "gameScene/gamescene.h"
-#include "items/cardItem/carditem.h"
+#include "items/cardItem/cardItem.h"
 #include "mainView/mainview.h"
+#include "model/controller/modelcontroller.h"
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), _view{ new MainView(this) }, _scene{ new GameScene(this) }
+    : QMainWindow(parent),
+      _view{ new MainView(this) },
+      _scene{ new GameScene(this) },
+      _modelController{ new ModelController() },
+      _sceneController{ new SceneController(_modelController, Theme::Light) }
 {
     initWindow();
 }
 
 MainWindow::~MainWindow()
 {
+    delete _modelController;
+    delete _sceneController;
 }
 
 void MainWindow::initWindow()
