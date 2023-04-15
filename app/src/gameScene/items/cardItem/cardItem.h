@@ -25,7 +25,7 @@ protected:
 private:
     QPixmap _imageFront;
     QPixmap _imageBack;
-    bool _isOpen{ true };
+    bool _isOpen{ false };
 
     void paintFrontSide(QPainter *painter, const QRect &borderRect, int cornerRadius);
 

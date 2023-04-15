@@ -13,10 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       _view{ new MainView(this) },
       _scene{ new GameScene(this) },
-      _modelController{ new ModelController() },
-      _sceneController{ new SceneController(_modelController, Theme::Light) }
+      _modelController{ new ModelController() }
 {
     initWindow();
+
+    _sceneController = new SceneController(_scene, _modelController, Theme::Light);
 }
 
 MainWindow::~MainWindow()
