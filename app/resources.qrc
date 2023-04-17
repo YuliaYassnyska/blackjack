@@ -49,12 +49,16 @@
         <file>resources/lightMode/spades/jack.png</file>
         <file>resources/lightMode/spades/king.png</file>
         <file>resources/lightMode/spades/nine.png</file>
-        <file>resources/lightMode/spades/Queen.png</file>
+        <file>resources/lightMode/spades/queen.png</file>
         <file>resources/lightMode/spades/seven.png</file>
         <file>resources/lightMode/spades/six.png</file>
         <file>resources/lightMode/spades/ten.png</file>
         <file>resources/lightMode/spades/three.png</file>
         <file>resources/lightMode/spades/two.png</file>
         <file>resources/lightMode/back_side.jpg</file>
+    </qresource>
+    <qresource prefix="/images/buttons">
+        <file>resources/hit.png</file>
+        <file>resources/stand.png</file>
     </qresource>
 </RCC>
