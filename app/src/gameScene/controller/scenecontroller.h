@@ -10,6 +10,7 @@ class ICard;
 class ModelController;
 
 class QGraphicsScene;
+class QGraphicsItem;
 class QWidget;
 
 class SceneController
@@ -20,10 +21,14 @@ public:
 
 private:
     void createCards();
+    void addCardsToScene();
     void makeDeck();
+    void createButtons();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
     ModelController *_modelController;
     Theme _theme;
+    QGraphicsItem *_hitButton;
+    QGraphicsItem *_standButton;
 };

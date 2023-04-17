@@ -24,6 +24,8 @@ set(PROJECT_SOURCES
     src/model/controller/modelcontroller.h
     src/gameScene/controller/scenecontroller.h
     src/gameScene/controller/scenecontroller.cpp
+    src/gameScene/items/buttonItem/buttonitem.h
+    src/gameScene/items/buttonItem/buttonitem.cpp
 )
 
 add_executable(${PROJECT_NAME}
