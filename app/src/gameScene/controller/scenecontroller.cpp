@@ -1,4 +1,5 @@
 #include "scenecontroller.h"
+#include "items/buttonItem/buttonitem.h"
 #include "items/cardItem/icard.h"
 #include "items/factory/cardfactory.h"
 #include "model/controller/modelcontroller.h"
@@ -9,10 +10,15 @@
 
 SceneController::SceneController(QGraphicsScene *scene, ModelController *modelController,
                                  Theme theme)
-    : _modelController{ modelController }, _theme{ theme }, _scene{ scene }
+    : _modelController{ modelController },
+      _theme{ theme },
+      _scene{ scene },
+      _hitButton{ new Scene::ButtonItem(":/images/buttons/resources/hit.png") },
+      _standButton(new Scene::ButtonItem(":/images/buttons/resources/stand.png"))
 {
     createCards();
     makeDeck();
+    createButtons();
 }
 
 std::vector<Scene::ICard *> SceneController::cards()
@@ -49,4 +55,19 @@ void SceneController::makeDeck()
         item->setPos(deckPos);
         moveMargin += 0.1;
     }
+}
+
+void SceneController::createButtons()
+{
+    _scene->addItem(_hitButton);
+
+    QPointF hitPos{ _scene->sceneRect().topRight().x() - 115,
+                    _scene->sceneRect().topRight().y() + 250 };
+    _hitButton->setPos(hitPos);
+
+    _scene->addItem(_standButton);
+
+    QPointF standPos{ _scene->sceneRect().topRight().x() - 115,
+                      _scene->sceneRect().topRight().y() + 350 };
+    _standButton->setPos(standPos);
 }
