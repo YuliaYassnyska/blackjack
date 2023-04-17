@@ -24,6 +24,7 @@ private:
     void addCardsToScene();
     void makeDeck();
     void createButtons();
+    void createDib();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
@@ -31,4 +32,6 @@ private:
     Theme _theme;
     QGraphicsItem *_hitButton;
     QGraphicsItem *_standButton;
+    QGraphicsItem *_dib;
+    QGraphicsItem *_dibLabel;
 };

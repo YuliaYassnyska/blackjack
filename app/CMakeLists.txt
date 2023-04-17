@@ -28,6 +28,11 @@ set(PROJECT_SOURCES
     src/gameScene/items/buttonItem/buttonitem.cpp
     src/gameScene/items/dibItem/dibitem.h
     src/gameScene/items/dibItem/dibitem.cpp
+    src/gameScene/items/labels/betLabel/betlabel.h
+    src/gameScene/items/labels/betLabel/betlabel.cpp
+    src/gameScene/items/labels/ilabel.h
+    src/gameScene/items/labels/pointLabel/pointlabel.h
+    src/gameScene/items/labels/pointLabel/pointlabel.cpp
 )
 
 add_executable(${PROJECT_NAME}
