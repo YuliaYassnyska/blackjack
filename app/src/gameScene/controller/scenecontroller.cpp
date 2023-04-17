@@ -17,6 +17,7 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _standButton(new Scene::ButtonItem(":/images/buttons/resources/stand.png"))
 {
     createCards();
+    addCardsToScene();
     makeDeck();
     createButtons();
 }
@@ -32,6 +33,15 @@ void SceneController::createCards()
     {
         CardFactory cardFactory{ card, _theme };
         _cards.push_back(cardFactory.create());
+    }
+}
+
+void SceneController::addCardsToScene()
+{
+    for (auto *card : cards())
+    {
+        auto *item{ dynamic_cast<QGraphicsItem *>(card) };
+        _scene->addItem(item);
     }
 }
 
@@ -51,7 +61,6 @@ void SceneController::makeDeck()
         if (item == nullptr)
             continue;
 
-        _scene->addItem(item);
         item->setPos(deckPos);
         moveMargin += 0.1;
     }

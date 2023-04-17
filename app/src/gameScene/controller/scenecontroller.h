@@ -21,6 +21,7 @@ public:
 
 private:
     void createCards();
+    void addCardsToScene();
     void makeDeck();
     void createButtons();
 
