@@ -1,7 +1,7 @@
 #include "cardfactory.h"
 #include "enums/cardEnums/cardenums.h"
 #include "gameScene/items/cardItem/cardItem.h"
-#include "model/items/carditem.h"
+#include "model/items/cardItem/icard.h"
 
 CardFactory::CardFactory(Model::ICard *item, Theme theme) : _item{ item }, _theme{ theme }
 {

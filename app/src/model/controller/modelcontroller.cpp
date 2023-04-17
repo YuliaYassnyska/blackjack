@@ -1,6 +1,6 @@
 #include "modelcontroller.h"
 #include "enums/cardEnums/cardenums.h"
-#include "model/items/carditem.h"
+#include "model/items/cardItem/carditem.h"
 
 ModelController::ModelController()
 {

@@ -1,7 +1,9 @@
 #include "scenecontroller.h"
 #include "items/buttonItem/buttonitem.h"
 #include "items/cardItem/icard.h"
+#include "items/dibItem/dibitem.h"
 #include "items/factory/cardfactory.h"
+#include "items/labels/betLabel/betlabel.h"
 #include "model/controller/modelcontroller.h"
 
 #include <QGraphicsItem>
@@ -14,12 +16,15 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _theme{ theme },
       _scene{ scene },
       _hitButton{ new Scene::ButtonItem(":/images/buttons/resources/hit.png") },
-      _standButton(new Scene::ButtonItem(":/images/buttons/resources/stand.png"))
+      _standButton{ new Scene::ButtonItem(":/images/buttons/resources/stand.png") },
+      _dib{ new Scene::DibItem(":/images/resources/dib.png") },
+      _dibLabel{ new Scene::BetLabel(5) }
 {
     createCards();
     addCardsToScene();
     makeDeck();
     createButtons();
+    createDib();
 }
 
 std::vector<Scene::ICard *> SceneController::cards()
@@ -79,4 +84,17 @@ void SceneController::createButtons()
     QPointF standPos{ _scene->sceneRect().topRight().x() - 115,
                       _scene->sceneRect().topRight().y() + 350 };
     _standButton->setPos(standPos);
+}
+
+void SceneController::createDib()
+{
+    _scene->addItem(_dib);
+
+    QPointF dibPos{ _scene->sceneRect().topLeft().x() + 25,
+                    _scene->sceneRect().topLeft().y() + 200 };
+    _dib->setPos(dibPos);
+
+    _scene->addItem(_dibLabel);
+    _dibLabel->setParentItem(_dib);
+    _dibLabel->moveBy(5, -10);
 }
