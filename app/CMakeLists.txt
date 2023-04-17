@@ -17,15 +17,17 @@ set(PROJECT_SOURCES
     src/gameScene/items/factory/cardfactory.h
     src/gameScene/items/factory/cardfactory.cpp
     src/gameScene/items/factory/icardfactory.h
-    src/model/items/carditem.h
-    src/model/items/carditem.cpp
-    src/model/items/icard.h
+    src/model/items/cardItem/carditem.h
+    src/model/items/cardItem/carditem.cpp
+    src/model/items/cardItem/icard.h
     src/model/controller/modelcontroller.cpp
     src/model/controller/modelcontroller.h
     src/gameScene/controller/scenecontroller.h
     src/gameScene/controller/scenecontroller.cpp
     src/gameScene/items/buttonItem/buttonitem.h
     src/gameScene/items/buttonItem/buttonitem.cpp
+    src/gameScene/items/dibItem/dibitem.h
+    src/gameScene/items/dibItem/dibitem.cpp
 )
 
 add_executable(${PROJECT_NAME}
