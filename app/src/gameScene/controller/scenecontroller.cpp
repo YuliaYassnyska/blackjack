@@ -121,11 +121,22 @@ void SceneController::createPlayers()
 
 void SceneController::playersResults()
 {
+    changeTurn();
 }
 
 void SceneController::addCardForPlayer()
 {
-    Scene::ICard *card{ _cards.at(_lastCardInDeck) };
+    Scene::ICard *neededCard = _cards.at(_lastCardInDeck);
+    neededCard->open();
+    QGraphicsItem *card{ dynamic_cast<QGraphicsItem *>(neededCard) };
+
+    if (card == nullptr)
+        return;
+
+    auto *player{ _players.at(_currentPlayerTurn) };
+    player->addCard(card);
+    player->updateCardsPos();
+    _lastCardInDeck--;
 }
 
 void SceneController::addPlayersToScene()
@@ -140,4 +151,12 @@ void SceneController::addPlayersToScene()
         _scene->addItem(item);
         player->init();
     }
+}
+
+void SceneController::changeTurn()
+{
+    if (_currentPlayerTurn == 0)
+        _currentPlayerTurn++;
+    else
+        _currentPlayerTurn -= _currentPlayerTurn;
 }

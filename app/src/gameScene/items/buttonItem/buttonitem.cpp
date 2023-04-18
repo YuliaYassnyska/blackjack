@@ -2,11 +2,14 @@
 
 #include <QPainter>
 
+#include <iostream>
+
 namespace Scene
 {
 ButtonItem::ButtonItem(const QString &imagePath, std::function<void(void)> callback)
     : _image{ QPixmap(imagePath).scaled(boundingRect().size().toSize()) }, _callback{ callback }
 {
+    setFlag(GraphicsItemFlag::ItemIsSelectable);
 }
 
 QRectF ButtonItem::boundingRect() const

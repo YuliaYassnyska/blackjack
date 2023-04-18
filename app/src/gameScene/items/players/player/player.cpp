@@ -18,14 +18,21 @@ QRectF Player::boundingRect() const
 void Player::updateCardsPos()
 {
     int cardOffset{ 0 };
-    QSizeF cardsSize{ _cards.front()->boundingRect().width() + cardOffset,
-                      _cards.front()->boundingRect().height() };
-    QPointF cardStart{ boundingRect().width() - cardsSize.width() / 2,
-                       boundingRect().height() - cardsSize.height() / 2 };
+    const int stepOffset{ 20 };
+    const unsigned long startPointOffset{ (_cards.size() - 1) * stepOffset / 2 };
 
+    QSizeF cardsSize{ _cards.front()->boundingRect().width(),
+                      _cards.front()->boundingRect().height() };
+    QPointF cardStart{ QPointF{ (boundingRect().width() - cardsSize.width()) / 2 - startPointOffset,
+                                (boundingRect().height() - cardsSize.height()) / 2 } };
+
+    int zValue{ 0 };
     for (auto *card : _cards)
     {
-        cardOffset += 5;
+        card->setParentItem(this);
+        card->setPos(cardStart.x() + cardOffset, cardStart.y());
+        card->setZValue(zValue++);
+        cardOffset += stepOffset;
     }
 }
 

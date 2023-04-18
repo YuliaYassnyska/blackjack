@@ -31,6 +31,7 @@ private:
     void playersResults();
     void addCardForPlayer();
     void addPlayersToScene();
+    void changeTurn();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
@@ -41,5 +42,6 @@ private:
     QGraphicsItem *_dib;
     QGraphicsItem *_dibLabel;
     int _lastCardInDeck{ 0 };
+    int _currentPlayerTurn{ 0 };
     std::vector<Scene::IPlayer *> _players;
 };
