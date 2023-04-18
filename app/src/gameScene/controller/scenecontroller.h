@@ -25,6 +25,7 @@ private:
     void makeDeck();
     void createButtons();
     void createDib();
+    void createPlayers();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
@@ -34,4 +35,6 @@ private:
     QGraphicsItem *_standButton;
     QGraphicsItem *_dib;
     QGraphicsItem *_dibLabel;
+    QGraphicsItem *_player;
+    QGraphicsItem *_dealer;
 };
