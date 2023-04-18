@@ -4,6 +4,8 @@
 #include "items/dibItem/dibitem.h"
 #include "items/factory/cardfactory.h"
 #include "items/labels/betLabel/betlabel.h"
+#include "items/players/dealer/dealer.h"
+#include "items/players/player/player.h"
 #include "model/controller/modelcontroller.h"
 
 #include <QGraphicsItem>
@@ -18,13 +20,16 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _hitButton{ new Scene::ButtonItem(":/images/buttons/resources/hit.png") },
       _standButton{ new Scene::ButtonItem(":/images/buttons/resources/stand.png") },
       _dib{ new Scene::DibItem(":/images/resources/dib.png") },
-      _dibLabel{ new Scene::BetLabel(5) }
+      _dibLabel{ new Scene::BetLabel(5) },
+      _dealer{ new Scene::Dealer() },
+      _player{ new Scene::Player() }
 {
     createCards();
     addCardsToScene();
     makeDeck();
     createButtons();
     createDib();
+    createPlayers();
 }
 
 std::vector<Scene::ICard *> SceneController::cards()
@@ -91,10 +96,25 @@ void SceneController::createDib()
     _scene->addItem(_dib);
 
     QPointF dibPos{ _scene->sceneRect().topLeft().x() + 25,
-                    _scene->sceneRect().topLeft().y() + 200 };
+                    _scene->sceneRect().topLeft().y() + 250 };
     _dib->setPos(dibPos);
 
     _scene->addItem(_dibLabel);
     _dibLabel->setParentItem(_dib);
     _dibLabel->moveBy(5, -10);
+}
+
+void SceneController::createPlayers()
+{
+    _scene->addItem(_dealer);
+
+    QPointF dealerPos{ _scene->sceneRect().center().x() - 250,
+                       _scene->sceneRect().center().y() - 300 };
+    _dealer->setPos(dealerPos);
+
+    _scene->addItem(_player);
+
+    QPointF playerPos{ _scene->sceneRect().center().x() - 250,
+                       _scene->sceneRect().center().y() + 100 };
+    _player->setPos(playerPos);
 }

@@ -33,6 +33,11 @@ set(PROJECT_SOURCES
     src/gameScene/items/labels/ilabel.h
     src/gameScene/items/labels/pointLabel/pointlabel.h
     src/gameScene/items/labels/pointLabel/pointlabel.cpp
+    src/gameScene/items/players/iplayer.h
+    src/gameScene/items/players/player/player.h
+    src/gameScene/items/players/player/player.cpp
+    src/gameScene/items/players/dealer/dealer.h
+    src/gameScene/items/players/dealer/dealer.cpp
 )
 
 add_executable(${PROJECT_NAME}
