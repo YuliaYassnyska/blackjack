@@ -136,6 +136,9 @@ void SceneController::addCardForPlayer()
     auto *player{ _players.at(_currentPlayerTurn) };
     player->addCard(card);
     player->updateCardsPos();
+
+    _modelController->addCardForPlayer(player->modelId(), neededCard->modelId());
+
     _lastCardInDeck--;
 }
 

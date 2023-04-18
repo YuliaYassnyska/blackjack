@@ -39,3 +39,33 @@ void ModelController::createPlayers()
     while (id < 2)
         _players.push_back(new Model::Player(id++));
 }
+
+void ModelController::addCardForPlayer(unsigned playerId, unsigned cardId)
+{
+    auto *player{ playerById(playerId) };
+    auto *card{ cardById(cardId) };
+    player->addCard(card);
+}
+
+Model::IPlayer *ModelController::playerById(unsigned playerId) const
+{
+    auto playerIt
+        = std::find_if(_players.cbegin(), _players.cend(),
+                       [playerId](Model::IPlayer *player) { return player->id() == playerId; });
+
+    if (playerIt != _players.cend())
+        return *playerIt;
+
+    return nullptr;
+}
+
+Model::ICard *ModelController::cardById(unsigned cardId) const
+{
+    auto cardIt = std::find_if(_cards.cbegin(), _cards.cend(),
+                               [cardId](Model::ICard *card) { return card->id() == cardId; });
+
+    if (cardIt != _cards.cend())
+        return *cardIt;
+
+    return nullptr;
+}

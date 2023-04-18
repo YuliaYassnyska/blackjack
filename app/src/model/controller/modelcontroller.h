@@ -19,6 +19,9 @@ public:
 private:
     void createCards();
     void createPlayers();
+    void addCardForPlayer(unsigned playerId, unsigned cardId);
+    Model::IPlayer *playerById(unsigned playerId) const;
+    Model::ICard *cardById(unsigned cardId) const;
 
     std::vector<Model::ICard *> _cards;
     std::vector<Model::IPlayer *> _players;
