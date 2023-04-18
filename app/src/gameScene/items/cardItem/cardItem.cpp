@@ -5,11 +5,13 @@
 namespace Scene
 {
 CardItem::CardItem(const QString &themePath, const QString &imageFrontPath,
-                   const QString &imageBackPath)
+                   const QString &imageBackPath, unsigned modelId)
     : QGraphicsItem(),
       _imageFront{ QPixmap{ themePath + imageFrontPath }.scaled(boundingRect().size().toSize()) },
-      _imageBack{ QPixmap{ themePath + imageBackPath }.scaled(boundingRect().size().toSize()) }
+      _imageBack{ QPixmap{ themePath + imageBackPath }.scaled(boundingRect().size().toSize()) },
+      _modelId{ modelId }
 {
+    setFlags(ItemIsMovable);
 }
 
 void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/,
@@ -55,5 +57,15 @@ void CardItem::open()
 void CardItem::close()
 {
     _isOpen = false;
+}
+
+void CardItem::setPos(double x, double y)
+{
+    setPos(x, y);
+}
+
+unsigned CardItem::modelId() const
+{
+    return _modelId;
 }
 } // namespace Scene

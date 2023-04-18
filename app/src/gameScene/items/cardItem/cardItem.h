@@ -11,12 +11,15 @@ namespace Scene
 class CardItem : public ICard, public QGraphicsItem
 {
 public:
-    CardItem(const QString &themePath, const QString &imageFrontPath, const QString &imageBackPath);
+    CardItem(const QString &themePath, const QString &imageFrontPath, const QString &imageBackPath,
+             unsigned modelId);
 
     QRectF boundingRect() const override;
 
     void open() override;
     void close() override;
+    void setPos(double x, double y) override;
+    unsigned modelId() const override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/,
@@ -26,6 +29,7 @@ private:
     QPixmap _imageFront;
     QPixmap _imageBack;
     bool _isOpen{ false };
+    unsigned _modelId;
 
     void paintFrontSide(QPainter *painter, const QRect &borderRect, int cornerRadius);
 

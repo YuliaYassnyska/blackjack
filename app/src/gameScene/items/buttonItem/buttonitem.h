@@ -7,7 +7,7 @@ namespace Scene
 class ButtonItem : public QGraphicsItem
 {
 public:
-    ButtonItem(const QString &imagePath);
+    ButtonItem(const QString &imagePath, std::function<void(void)> callback);
 
     QRectF boundingRect() const override;
 
@@ -18,5 +18,6 @@ protected:
 
 private:
     QPixmap _image;
+    std::function<void(void)> _callback{ []() {} };
 };
 } // namespace Scene

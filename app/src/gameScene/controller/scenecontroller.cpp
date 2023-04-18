@@ -7,6 +7,7 @@
 #include "items/players/dealer/dealer.h"
 #include "items/players/player/player.h"
 #include "model/controller/modelcontroller.h"
+#include "model/items/players/iplayer.h"
 
 #include <QGraphicsItem>
 #include <QGraphicsProxyWidget>
@@ -17,12 +18,12 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     : _modelController{ modelController },
       _theme{ theme },
       _scene{ scene },
-      _hitButton{ new Scene::ButtonItem(":/images/buttons/resources/hit.png") },
-      _standButton{ new Scene::ButtonItem(":/images/buttons/resources/stand.png") },
+      _hitButton{ new Scene::ButtonItem(":/images/buttons/resources/hit.png",
+                                        [this]() { addCardForPlayer(); }) },
+      _standButton{ new Scene::ButtonItem(":/images/buttons/resources/stand.png",
+                                          [this]() { playersResults(); }) },
       _dib{ new Scene::DibItem(":/images/resources/dib.png") },
-      _dibLabel{ new Scene::BetLabel(5) },
-      _dealer{ new Scene::Dealer() },
-      _player{ new Scene::Player() }
+      _dibLabel{ new Scene::BetLabel(5) }
 {
     createCards();
     addCardsToScene();
@@ -30,6 +31,7 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     createButtons();
     createDib();
     createPlayers();
+    addPlayersToScene();
 }
 
 std::vector<Scene::ICard *> SceneController::cards()
@@ -74,6 +76,7 @@ void SceneController::makeDeck()
         item->setPos(deckPos);
         moveMargin += 0.1;
     }
+    _lastCardInDeck = cards().size() - 1;
 }
 
 void SceneController::createButtons()
@@ -106,15 +109,54 @@ void SceneController::createDib()
 
 void SceneController::createPlayers()
 {
-    _scene->addItem(_dealer);
+    for (auto *player : _modelController->players())
+    {
 
-    QPointF dealerPos{ _scene->sceneRect().center().x() - 250,
-                       _scene->sceneRect().center().y() - 300 };
-    _dealer->setPos(dealerPos);
+        if (player->id() == 0)
+            _players.push_back(new Scene::Dealer(player));
+        else
+            _players.push_back(new Scene::Player(player));
+    }
+}
 
-    _scene->addItem(_player);
+void SceneController::playersResults()
+{
+    changeTurn();
+}
 
-    QPointF playerPos{ _scene->sceneRect().center().x() - 250,
-                       _scene->sceneRect().center().y() + 100 };
-    _player->setPos(playerPos);
+void SceneController::addCardForPlayer()
+{
+    Scene::ICard *neededCard = _cards.at(_lastCardInDeck);
+    neededCard->open();
+    QGraphicsItem *card{ dynamic_cast<QGraphicsItem *>(neededCard) };
+
+    if (card == nullptr)
+        return;
+
+    auto *player{ _players.at(_currentPlayerTurn) };
+    player->addCard(card);
+    player->updateCardsPos();
+    _lastCardInDeck--;
+}
+
+void SceneController::addPlayersToScene()
+{
+    for (auto *player : _players)
+    {
+        auto *item = dynamic_cast<QGraphicsItem *>(player);
+
+        if (item == nullptr)
+            continue;
+
+        _scene->addItem(item);
+        player->init();
+    }
+}
+
+void SceneController::changeTurn()
+{
+    if (_currentPlayerTurn == 0)
+        _currentPlayerTurn++;
+    else
+        _currentPlayerTurn -= _currentPlayerTurn;
 }

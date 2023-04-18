@@ -15,5 +15,5 @@ Scene::ICard *CardFactory::create()
     QString suitPath = getSuitPath(_item->suit());
     QString themePath = startStr + getThemePath(_theme);
 
-    return new Scene::CardItem(themePath, suitPath + cardPath, "/back_side.jpg");
+    return new Scene::CardItem(themePath, suitPath + cardPath, "/back_side.jpg", _item->id());
 }
