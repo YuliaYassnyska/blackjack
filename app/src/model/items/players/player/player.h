@@ -9,12 +9,14 @@ namespace Model
 class Player : public IPlayer
 {
 public:
-    Player();
+    Player(unsigned id);
 
     int score() override;
     void addCard(ICard *card) override;
+    unsigned id() const override;
 
 private:
     std::vector<ICard *> _cards;
+    unsigned _id;
 };
 } // namespace Model

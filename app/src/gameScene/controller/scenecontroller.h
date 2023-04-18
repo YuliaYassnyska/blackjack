@@ -1,6 +1,8 @@
 #pragma once
 
 #include "enums/cardEnums/cardenums.h"
+#include "items/players/iplayer.h"
+
 #include <vector>
 
 namespace Scene
@@ -26,6 +28,9 @@ private:
     void createButtons();
     void createDib();
     void createPlayers();
+    void playersResults();
+    void addCardForPlayer();
+    void addPlayersToScene();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
@@ -35,6 +40,6 @@ private:
     QGraphicsItem *_standButton;
     QGraphicsItem *_dib;
     QGraphicsItem *_dibLabel;
-    QGraphicsItem *_player;
-    QGraphicsItem *_dealer;
+    int _lastCardInDeck{ 0 };
+    std::vector<Scene::IPlayer *> _players;
 };

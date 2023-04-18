@@ -4,8 +4,8 @@
 
 namespace Scene
 {
-ButtonItem::ButtonItem(const QString &imagePath)
-    : _image{ QPixmap(imagePath).scaled(boundingRect().size().toSize()) }
+ButtonItem::ButtonItem(const QString &imagePath, std::function<void(void)> callback)
+    : _image{ QPixmap(imagePath).scaled(boundingRect().size().toSize()) }, _callback{ callback }
 {
 }
 
@@ -32,6 +32,7 @@ void ButtonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*opt
 
 void ButtonItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    _callback();
 }
 
 } // namespace Scene
