@@ -20,6 +20,7 @@ public:
     void close() override;
     void setPos(double x, double y) override;
     unsigned modelId() const override;
+    bool isOpen() const override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/,

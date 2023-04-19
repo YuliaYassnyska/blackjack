@@ -26,4 +26,14 @@ unsigned CardItem::id() const
 {
     return _id;
 }
+
+void CardItem::setOpen(bool isOpen)
+{
+    _isOpen = isOpen;
+}
+
+bool CardItem::isOpen() const
+{
+    return _isOpen;
+}
 } // namespace Model

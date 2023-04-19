@@ -68,4 +68,9 @@ unsigned CardItem::modelId() const
 {
     return _modelId;
 }
+
+bool CardItem::isOpen() const
+{
+    return _isOpen;
+}
 } // namespace Scene
