@@ -13,6 +13,7 @@ public:
 
     int score() override;
     void addCard(ICard *card) override;
+    bool isAceWithСourtiers() override;
     unsigned id() const override;
 
 private:

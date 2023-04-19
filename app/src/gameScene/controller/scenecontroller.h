@@ -3,6 +3,8 @@
 #include "enums/cardEnums/cardenums.h"
 #include "items/players/iplayer.h"
 
+#include <QObject>
+
 #include <vector>
 
 namespace Scene
@@ -16,8 +18,9 @@ class QGraphicsScene;
 class QGraphicsItem;
 class QWidget;
 
-class SceneController
+class SceneController : public QObject
 {
+    Q_OBJECT
 public:
     SceneController(QGraphicsScene *scene, ModelController *modelController, Theme theme);
     std::vector<Scene::ICard *> cards();
@@ -34,6 +37,8 @@ private:
     void addPlayersToScene();
     void changeTurn();
     void moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *player);
+    void updateCurrentPlayerCards(QGraphicsItem *item);
+    void connectSignals();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;

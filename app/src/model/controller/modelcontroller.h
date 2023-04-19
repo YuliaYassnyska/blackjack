@@ -15,7 +15,7 @@ public:
 
     std::vector<Model::ICard *> cards();
     std::vector<Model::IPlayer *> players();
-    void addCardForPlayer(unsigned playerId, unsigned cardId);
+    void addCardForPlayer(unsigned playerId, unsigned cardId, bool isOpen);
 
 private:
     void createCards();

@@ -40,10 +40,12 @@ void ModelController::createPlayers()
         _players.push_back(new Model::Player(id++));
 }
 
-void ModelController::addCardForPlayer(unsigned playerId, unsigned cardId)
+void ModelController::addCardForPlayer(unsigned playerId, unsigned cardId, bool isOpen)
 {
     auto *player{ playerById(playerId) };
     auto *card{ cardById(cardId) };
+    card->setOpen(isOpen);
+
     player->addCard(card);
 }
 
