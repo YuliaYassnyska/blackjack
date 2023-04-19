@@ -7,8 +7,9 @@ namespace Model
 class ICard
 {
 public:
-    virtual int value() = 0;
-    virtual Suit suit() = 0;
-    virtual Card card() = 0;
+    virtual int value() const = 0;
+    virtual Suit suit() const = 0;
+    virtual Card card() const = 0;
+    virtual unsigned id() const = 0;
 };
 } // namespace Model

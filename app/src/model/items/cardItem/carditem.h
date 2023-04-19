@@ -8,15 +8,17 @@ namespace Model
 class CardItem : public ICard
 {
 public:
-    CardItem(Suit suit, Card card);
+    CardItem(Suit suit, Card card, unsigned id);
 
-    int value() override;
-    Suit suit() override;
-    Card card() override;
+    int value() const override;
+    Suit suit() const override;
+    Card card() const override;
+    unsigned id() const override;
 
 private:
     Suit _suit;
     Card _card;
+    unsigned _id;
 };
 
 } // namespace Model
