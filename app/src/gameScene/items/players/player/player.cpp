@@ -20,19 +20,13 @@ QRectF Player::boundingRect() const
 void Player::updateCardsPos()
 {
     int cardOffset{ 0 };
-    const int stepOffset{ 20 };
-    const unsigned long startPointOffset{ (_cards.size() - 1) * stepOffset / 2 };
-
-    QSizeF cardsSize{ _cards.front()->boundingRect().width(),
-                      _cards.front()->boundingRect().height() };
-    QPointF cardStart{ QPointF{ (boundingRect().width() - cardsSize.width()) / 2 - startPointOffset,
-                                (boundingRect().height() - cardsSize.height()) / 2 } };
+    const int stepOffset{ 30 };
 
     int zValue{ 0 };
     for (auto *card : _cards)
     {
         card->setParentItem(this);
-        card->setPos(cardStart.x() + cardOffset, cardStart.y());
+        card->setPos(_cardStart.x() + cardOffset, _cardStart.y());
         card->setZValue(zValue++);
         cardOffset += stepOffset;
     }
@@ -71,5 +65,18 @@ void Player::setupPointLabel()
 void Player::updatePointLabel()
 {
     _pointLabel->updateText(_modelPlayer->score());
+}
+
+QPointF Player::cardStart()
+{
+    const int stepOffset{ 30 };
+    const unsigned long startPointOffset{ (_cards.size() - 1) * stepOffset / 2 };
+
+    QSizeF cardsSize{ _cards.front()->boundingRect().width(),
+                      _cards.front()->boundingRect().height() };
+    _cardStart = QPointF{ (boundingRect().width() - cardsSize.width()) / 2 - startPointOffset,
+                          (boundingRect().height() - cardsSize.height()) / 2 };
+
+    return mapToScene(_cardStart);
 }
 } // namespace Scene
