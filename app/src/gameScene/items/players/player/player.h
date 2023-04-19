@@ -19,7 +19,7 @@ public:
 
     QRectF boundingRect() const override;
 
-    void updateCardsPos() override;
+    void updateCards() override;
     void addCard(QGraphicsItem *card) override;
     unsigned modelId() const override;
     void init() override;

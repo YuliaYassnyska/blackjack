@@ -17,7 +17,7 @@ QRectF Dealer::boundingRect() const
     return QRectF(0, 0, 500, 200);
 }
 
-void Dealer::updateCardsPos()
+void Dealer::updateCards()
 {
     int cardOffset{ 0 };
     const int stepOffset{ 30 };
@@ -25,6 +25,9 @@ void Dealer::updateCardsPos()
     int zValue{ 0 };
     for (auto *card : _cards)
     {
+        if (card != _cards.front())
+            dynamic_cast<ICard *>(card)->open();
+
         card->setParentItem(this);
         card->setPos(_cardStart.x() + cardOffset, _cardStart.y());
         card->setZValue(zValue++);

@@ -17,7 +17,7 @@ QRectF Player::boundingRect() const
     return QRectF(0, 0, 500, 200);
 }
 
-void Player::updateCardsPos()
+void Player::updateCards()
 {
     int cardOffset{ 0 };
     const int stepOffset{ 30 };
@@ -25,6 +25,7 @@ void Player::updateCardsPos()
     int zValue{ 0 };
     for (auto *card : _cards)
     {
+        dynamic_cast<ICard *>(card)->open();
         card->setParentItem(this);
         card->setPos(_cardStart.x() + cardOffset, _cardStart.y());
         card->setZValue(zValue++);
