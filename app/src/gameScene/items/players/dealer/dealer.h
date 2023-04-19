@@ -11,6 +11,8 @@ class IPlayer;
 
 namespace Scene
 {
+class PointLabel;
+
 class Dealer : public IPlayer, public QGraphicsItem
 {
 public:
@@ -22,6 +24,8 @@ public:
     void addCard(QGraphicsItem *card) override;
     unsigned modelId() const override;
     void init() override;
+    void setupPointLabel() override;
+    void updatePointLabel() override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -29,5 +33,6 @@ protected:
 private:
     std::vector<QGraphicsItem *> _cards;
     Model::IPlayer *_modelDealer;
+    PointLabel *_pointLabel;
 };
 } // namespace Scene

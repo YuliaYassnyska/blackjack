@@ -1,4 +1,5 @@
 #include "dealer.h"
+#include "items/labels/pointLabel/pointlabel.h"
 #include "model/items/players/iplayer.h"
 
 #include <QGraphicsScene>
@@ -6,7 +7,8 @@
 
 namespace Scene
 {
-Dealer::Dealer(Model::IPlayer *modelDealer) : _modelDealer{ modelDealer }
+Dealer::Dealer(Model::IPlayer *modelDealer)
+    : _modelDealer{ modelDealer }, _pointLabel{ new PointLabel(0) }
 {
 }
 
@@ -51,6 +53,20 @@ void Dealer::init()
     QPointF dealerPos{ scene()->sceneRect().center().x() - 250,
                        scene()->sceneRect().center().y() - 300 };
     setPos(dealerPos);
+}
+
+void Dealer::setupPointLabel()
+{
+    scene()->addItem(_pointLabel);
+    _pointLabel->setParentItem(this);
+    QPointF labelPos{ (boundingRect().width() - _pointLabel->boundingRect().width()) / 2,
+                      boundingRect().bottom() };
+    _pointLabel->setPos(labelPos);
+}
+
+void Dealer::updatePointLabel()
+{
+    _pointLabel->updateText(_modelDealer->score());
 }
 
 void Dealer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

@@ -1,4 +1,5 @@
 #include "player.h"
+#include "items/labels/pointLabel/pointlabel.h"
 #include "model/items/players/iplayer.h"
 
 #include <QGraphicsScene>
@@ -6,7 +7,8 @@
 
 namespace Scene
 {
-Player::Player(Model::IPlayer *modelPlayer) : _modelPlayer{ modelPlayer }
+Player::Player(Model::IPlayer *modelPlayer)
+    : _modelPlayer{ modelPlayer }, _pointLabel{ new PointLabel(0) }
 {
 }
 
@@ -55,5 +57,19 @@ void Player::init()
     QPointF playerPos{ scene()->sceneRect().center().x() - 250,
                        scene()->sceneRect().center().y() + 100 };
     setPos(playerPos);
+}
+
+void Player::setupPointLabel()
+{
+    scene()->addItem(_pointLabel);
+    _pointLabel->setParentItem(this);
+    QPointF labelPos{ (boundingRect().width() - _pointLabel->boundingRect().width()) / 2,
+                      boundingRect().top() - 20 };
+    _pointLabel->setPos(labelPos);
+}
+
+void Player::updatePointLabel()
+{
+    _pointLabel->updateText(_modelPlayer->score());
 }
 } // namespace Scene

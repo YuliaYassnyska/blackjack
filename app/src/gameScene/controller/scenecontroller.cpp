@@ -139,6 +139,7 @@ void SceneController::addCardForPlayer()
 
     _modelController->addCardForPlayer(player->modelId(), neededCard->modelId());
 
+    player->updatePointLabel();
     _lastCardInDeck--;
 }
 
@@ -153,6 +154,7 @@ void SceneController::addPlayersToScene()
 
         _scene->addItem(item);
         player->init();
+        player->setupPointLabel();
     }
 }
 
