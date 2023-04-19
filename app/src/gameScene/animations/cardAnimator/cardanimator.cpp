@@ -12,6 +12,8 @@ CardAnimator::CardAnimator(QObject *parent)
 {
     _animation->setTimeLine(_timer);
     _timer->setFrameRange(0, 100);
+
+    connect(_timer, &QTimeLine::finished, this, &CardAnimator::onTimerFinished);
 }
 
 void CardAnimator::moveTo(QPointF pos)
@@ -26,16 +28,13 @@ void CardAnimator::setCard(QGraphicsItem *card)
     _animation->setItem(card);
 }
 
-void CardAnimator::connectPlayers(std::vector<IPlayer *> players)
-{
-    for (auto *player : players)
-    {
-        QObject::connect(_timer, &QTimeLine::finished, [player]() { player->updateCardsPos(); });
-    }
-}
-
 bool CardAnimator::isRunning()
 {
     return _timer->state() == QTimeLine::Running;
+}
+
+void CardAnimator::onTimerFinished()
+{
+    emit animated(_animation->item());
 }
 } // namespace Scene

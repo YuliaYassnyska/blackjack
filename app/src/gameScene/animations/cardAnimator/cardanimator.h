@@ -1,6 +1,8 @@
 #pragma once
 
+#include <QObject>
 #include <QPointF>
+
 #include <vector>
 
 class QTimeLine;
@@ -12,18 +14,23 @@ namespace Scene
 {
 class IPlayer;
 
-class CardAnimator
+class CardAnimator : public QObject
 {
+    Q_OBJECT
 public:
     CardAnimator(QObject *parent);
 
     void moveTo(QPointF pos);
     void setCard(QGraphicsItem *card);
-    void connectPlayers(std::vector<Scene::IPlayer *> players);
 
     bool isRunning();
 
+signals:
+    void animated(QGraphicsItem *card);
+
 private:
+    void onTimerFinished();
+
     QTimeLine *_timer;
     QGraphicsItemAnimation *_animation;
 };

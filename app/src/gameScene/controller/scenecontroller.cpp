@@ -14,6 +14,7 @@
 #include <QGraphicsItemAnimation>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
+#include <QTimeLine>
 
 SceneController::SceneController(QGraphicsScene *scene, ModelController *modelController,
                                  Theme theme)
@@ -35,6 +36,7 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     createDib();
     createPlayers();
     addPlayersToScene();
+    connectSignals();
 }
 
 std::vector<Scene::ICard *> SceneController::cards()
@@ -120,8 +122,6 @@ void SceneController::createPlayers()
         else
             _players.push_back(new Scene::Player(player));
     }
-
-    _cardAnimator->connectPlayers(_players);
 }
 
 void SceneController::playersResults()
@@ -135,7 +135,6 @@ void SceneController::addCardForPlayer()
         return;
 
     Scene::ICard *neededCard = _cards.at(_lastCardInDeck);
-    neededCard->open();
     QGraphicsItem *card{ dynamic_cast<QGraphicsItem *>(neededCard) };
 
     if (card == nullptr)
@@ -145,10 +144,6 @@ void SceneController::addCardForPlayer()
     card->setZValue(100);
     player->addCard(card);
     moveCardAnimation(card, player);
-
-    _modelController->addCardForPlayer(player->modelId(), neededCard->modelId());
-
-    player->updatePointLabel();
     _lastCardInDeck--;
 }
 
@@ -156,7 +151,7 @@ void SceneController::addPlayersToScene()
 {
     for (auto *player : _players)
     {
-        auto *item = dynamic_cast<QGraphicsItem *>(player);
+        auto *item{ dynamic_cast<QGraphicsItem *>(player) };
 
         if (item == nullptr)
             continue;
@@ -179,4 +174,25 @@ void SceneController::moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *pla
 {
     _cardAnimator->setCard(card);
     _cardAnimator->moveTo(player->cardStart());
+}
+
+void SceneController::updateCurrentPlayerCards(QGraphicsItem *item)
+{
+    Scene::ICard *card{ dynamic_cast<Scene::ICard *>(item) };
+
+    if (card == nullptr)
+        return;
+
+    auto *player{ _players.at(_currentPlayerTurn) };
+    player->updateCards();
+
+    _modelController->addCardForPlayer(player->modelId(), card->modelId(), card->isOpen());
+
+    player->updatePointLabel();
+}
+
+void SceneController::connectSignals()
+{
+    QObject::connect(_cardAnimator, &Scene::CardAnimator::animated, this,
+                     &SceneController::updateCurrentPlayerCards);
 }
