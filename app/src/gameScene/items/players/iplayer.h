@@ -2,6 +2,8 @@
 
 #include "items/cardItem/icard.h"
 
+#include <QPointF>
+
 class QGraphicsItem;
 
 namespace Scene
@@ -15,5 +17,6 @@ public:
     virtual void init() = 0;
     virtual void setupPointLabel() = 0;
     virtual void updatePointLabel() = 0;
+    virtual QPointF cardStart() = 0;
 };
 } // namespace Scene

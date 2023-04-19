@@ -26,6 +26,7 @@ public:
     void init() override;
     void setupPointLabel() override;
     void updatePointLabel() override;
+    QPointF cardStart() override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -34,5 +35,6 @@ private:
     std::vector<QGraphicsItem *> _cards;
     Model::IPlayer *_modelDealer;
     PointLabel *_pointLabel;
+    QPointF _cardStart;
 };
 } // namespace Scene

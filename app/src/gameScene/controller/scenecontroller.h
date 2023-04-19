@@ -8,7 +8,8 @@
 namespace Scene
 {
 class ICard;
-}
+class CardAnimator;
+} // namespace Scene
 class ModelController;
 
 class QGraphicsScene;
@@ -32,6 +33,7 @@ private:
     void addCardForPlayer();
     void addPlayersToScene();
     void changeTurn();
+    void moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *player);
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
@@ -44,4 +46,5 @@ private:
     int _lastCardInDeck{ 0 };
     int _currentPlayerTurn{ 0 };
     std::vector<Scene::IPlayer *> _players;
+    Scene::CardAnimator *_cardAnimator;
 };

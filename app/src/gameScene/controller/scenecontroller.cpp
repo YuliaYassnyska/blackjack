@@ -1,4 +1,5 @@
 #include "scenecontroller.h"
+#include "animations/cardAnimator/cardanimator.h"
 #include "items/buttonItem/buttonitem.h"
 #include "items/cardItem/icard.h"
 #include "items/dibItem/dibitem.h"
@@ -10,6 +11,7 @@
 #include "model/items/players/iplayer.h"
 
 #include <QGraphicsItem>
+#include <QGraphicsItemAnimation>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
 
@@ -23,7 +25,8 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _standButton{ new Scene::ButtonItem(":/images/buttons/resources/stand.png",
                                           [this]() { playersResults(); }) },
       _dib{ new Scene::DibItem(":/images/resources/dib.png") },
-      _dibLabel{ new Scene::BetLabel(5) }
+      _dibLabel{ new Scene::BetLabel(5) },
+      _cardAnimator{ new Scene::CardAnimator(scene) }
 {
     createCards();
     addCardsToScene();
@@ -117,6 +120,8 @@ void SceneController::createPlayers()
         else
             _players.push_back(new Scene::Player(player));
     }
+
+    _cardAnimator->connectPlayers(_players);
 }
 
 void SceneController::playersResults()
@@ -126,6 +131,9 @@ void SceneController::playersResults()
 
 void SceneController::addCardForPlayer()
 {
+    if (_cardAnimator->isRunning())
+        return;
+
     Scene::ICard *neededCard = _cards.at(_lastCardInDeck);
     neededCard->open();
     QGraphicsItem *card{ dynamic_cast<QGraphicsItem *>(neededCard) };
@@ -134,8 +142,9 @@ void SceneController::addCardForPlayer()
         return;
 
     auto *player{ _players.at(_currentPlayerTurn) };
+    card->setZValue(100);
     player->addCard(card);
-    player->updateCardsPos();
+    moveCardAnimation(card, player);
 
     _modelController->addCardForPlayer(player->modelId(), neededCard->modelId());
 
@@ -164,4 +173,10 @@ void SceneController::changeTurn()
         _currentPlayerTurn++;
     else
         _currentPlayerTurn -= _currentPlayerTurn;
+}
+
+void SceneController::moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *player)
+{
+    _cardAnimator->setCard(card);
+    _cardAnimator->moveTo(player->cardStart());
 }
