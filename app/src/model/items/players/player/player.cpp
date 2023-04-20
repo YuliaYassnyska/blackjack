@@ -13,7 +13,7 @@ int Player::score()
     {
         if (card->isOpen())
         {
-            if (card->card() == Card::Ace && isAceWithСourtiers())
+            if (card->card() == Card::Ace && isAceWithCourtiers())
                 score += 11;
             else
                 score += card->value();
@@ -27,7 +27,7 @@ void Player::addCard(ICard *card)
     _cards.push_back(card);
 }
 
-bool Player::isAceWithСourtiers()
+bool Player::isAceWithCourtiers()
 {
     const auto it{ std::find_if(_cards.cbegin(), _cards.cend(),
                                 [](ICard *card)

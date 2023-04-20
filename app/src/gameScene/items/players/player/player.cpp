@@ -76,7 +76,7 @@ Result Player::result() const
 QPointF Player::cardStart()
 {
     const int stepOffset{ 30 };
-    const unsigned long startPointOffset{ (_cards.size() - 1) * stepOffset / 2 };
+    const double startPointOffset{ (_cards.size() - 1) * stepOffset / 2.0 };
 
     QSizeF cardsSize{ _cards.front()->boundingRect().width(),
                       _cards.front()->boundingRect().height() };

@@ -5,6 +5,8 @@
 
 #include <QPointF>
 
+#include <vector>
+
 class QGraphicsItem;
 
 namespace Scene
