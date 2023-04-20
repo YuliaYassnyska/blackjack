@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QObject>
+
 #include <vector>
 
 namespace Model
@@ -8,14 +10,20 @@ class ICard;
 class IPlayer;
 } // namespace Model
 
-class ModelController
+class ModelController : public QObject
 {
+    Q_OBJECT
 public:
     ModelController();
 
     std::vector<Model::ICard *> cards();
     std::vector<Model::IPlayer *> players();
     void addCardForPlayer(unsigned playerId, unsigned cardId, bool isOpen);
+    void checkLoser(Model::IPlayer *player);
+    void clearPlayerCards();
+
+signals:
+    void roundEnd();
 
 private:
     void createCards();
