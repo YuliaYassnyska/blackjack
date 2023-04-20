@@ -88,6 +88,13 @@ QPointF Player::cardStart()
 
 void Player::clearCards()
 {
+    for (auto card : _cards)
+        card->setParentItem(nullptr);
     _cards.clear();
+}
+
+int Player::cardsSize() const
+{
+    return _cards.size();
 }
 } // namespace Scene

@@ -89,6 +89,24 @@ void Dealer::clearCards()
     _cards.clear();
 }
 
+int Dealer::cardsSize() const
+{
+    return _cards.size();
+}
+
+int Dealer::showClosedCard()
+{
+    ICard *card{ dynamic_cast<ICard *>(_cards.front()) };
+    card->open();
+
+    return card->modelId();
+}
+
+int Dealer::currentScore()
+{
+    return _modelDealer->score();
+}
+
 void Dealer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 }

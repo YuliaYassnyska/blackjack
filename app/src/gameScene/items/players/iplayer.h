@@ -21,5 +21,6 @@ public:
     virtual QPointF cardStart() = 0;
     virtual Result result() const = 0;
     virtual void clearCards() = 0;
+    virtual int cardsSize() const = 0;
 };
 } // namespace Scene

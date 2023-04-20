@@ -28,6 +28,7 @@ public:
     Result result() const override;
     QPointF cardStart() override;
     void clearCards() override;
+    int cardsSize() const override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
