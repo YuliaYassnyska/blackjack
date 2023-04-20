@@ -7,14 +7,8 @@
 
 namespace Scene
 {
-Dealer::Dealer(Model::IPlayer *modelDealer)
-    : _modelDealer{ modelDealer }, _pointLabel{ new PointLabel(0) }
+Dealer::Dealer(Model::IPlayer *modelDealer) : Player{ modelDealer }, _modelDealer{ modelDealer }
 {
-}
-
-QRectF Dealer::boundingRect() const
-{
-    return QRectF(0, 0, 500, 200);
 }
 
 void Dealer::updateCards()
@@ -23,26 +17,16 @@ void Dealer::updateCards()
     const int stepOffset{ 30 };
 
     int zValue{ 0 };
-    for (auto *card : _cards)
+    for (auto *card : cards())
     {
-        if (card != _cards.front())
+        if (card != cards().front())
             dynamic_cast<ICard *>(card)->open();
 
         card->setParentItem(this);
-        card->setPos(_cardStart.x() + cardOffset, _cardStart.y());
+        card->setPos(_cardPoint.x() + cardOffset, _cardPoint.y());
         card->setZValue(zValue++);
         cardOffset += stepOffset;
     }
-}
-
-void Dealer::addCard(QGraphicsItem *card)
-{
-    _cards.push_back(card);
-}
-
-unsigned Dealer::modelId() const
-{
-    return _modelDealer->id();
 }
 
 void Dealer::init()
@@ -51,52 +35,9 @@ void Dealer::init()
                        scene()->sceneRect().center().y() - 300 };
     setPos(dealerPos);
 }
-
-void Dealer::setupPointLabel()
-{
-    scene()->addItem(_pointLabel);
-    _pointLabel->setParentItem(this);
-    QPointF labelPos{ (boundingRect().width() - _pointLabel->boundingRect().width()) / 2,
-                      boundingRect().bottom() };
-    _pointLabel->setPos(labelPos);
-}
-
-void Dealer::updatePointLabel()
-{
-    _pointLabel->updateText(_modelDealer->score());
-}
-
-Result Dealer::result() const
-{
-    return _modelDealer->isLoser() ? Result::LOSER : Result::WINNER;
-}
-
-QPointF Dealer::cardStart()
-{
-    const int stepOffset{ 30 };
-    const unsigned long startPointOffset{ (_cards.size() - 1) * stepOffset / 2 };
-
-    QSizeF cardsSize{ _cards.front()->boundingRect().width(),
-                      _cards.front()->boundingRect().height() };
-    _cardStart = QPointF{ (boundingRect().width() - cardsSize.width()) / 2 - startPointOffset,
-                          (boundingRect().height() - cardsSize.height()) / 2 };
-
-    return mapToScene(_cardStart);
-}
-
-void Dealer::clearCards()
-{
-    _cards.clear();
-}
-
-int Dealer::cardsSize() const
-{
-    return _cards.size();
-}
-
 int Dealer::showClosedCard()
 {
-    ICard *card{ dynamic_cast<ICard *>(_cards.front()) };
+    ICard *card{ dynamic_cast<ICard *>(cards().front()) };
     card->open();
 
     return card->modelId();
@@ -105,9 +46,5 @@ int Dealer::showClosedCard()
 int Dealer::currentScore()
 {
     return _modelDealer->score();
-}
-
-void Dealer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
 }
 } // namespace Scene

@@ -22,5 +22,8 @@ public:
     virtual Result result() const = 0;
     virtual void clearCards() = 0;
     virtual int cardsSize() const = 0;
+    virtual int cash() const = 0;
+    virtual int bet() const = 0;
+    virtual std::vector<QGraphicsItem *> cards() const = 0;
 };
 } // namespace Scene

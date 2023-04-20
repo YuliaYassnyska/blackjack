@@ -2,7 +2,7 @@
 
 namespace Model
 {
-Player::Player(unsigned id) : _id{ id }
+Player::Player(unsigned id, int cash) : _id{ id }, _cash{ cash }
 {
 }
 
@@ -51,10 +51,28 @@ bool Player::isLoser() const
 void Player::lose()
 {
     _isLoser = true;
+    _cash -= _bet;
+}
+
+void Player::win()
+{
+    _isLoser = false;
+    _cash += 2 * _bet;
 }
 
 void Player::clearCards()
 {
     _cards.clear();
+    _isLoser = false;
+}
+
+int Player::cash() const
+{
+    return _cash;
+}
+
+int Player::bet() const
+{
+    return _bet;
 }
 } // namespace Model

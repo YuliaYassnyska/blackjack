@@ -27,7 +27,7 @@ void Player::updateCards()
     {
         dynamic_cast<ICard *>(card)->open();
         card->setParentItem(this);
-        card->setPos(_cardStart.x() + cardOffset, _cardStart.y());
+        card->setPos(_cardPoint.x() + cardOffset, _cardPoint.y());
         card->setZValue(zValue++);
         cardOffset += stepOffset;
     }
@@ -80,10 +80,10 @@ QPointF Player::cardStart()
 
     QSizeF cardsSize{ _cards.front()->boundingRect().width(),
                       _cards.front()->boundingRect().height() };
-    _cardStart = QPointF{ (boundingRect().width() - cardsSize.width()) / 2 - startPointOffset,
+    _cardPoint = QPointF{ (boundingRect().width() - cardsSize.width()) / 2 - startPointOffset,
                           (boundingRect().height() - cardsSize.height()) / 2 };
 
-    return mapToScene(_cardStart);
+    return mapToScene(_cardPoint);
 }
 
 void Player::clearCards()
@@ -96,5 +96,20 @@ void Player::clearCards()
 int Player::cardsSize() const
 {
     return _cards.size();
+}
+
+int Player::cash() const
+{
+    return _modelPlayer->cash();
+}
+
+int Player::bet() const
+{
+    return _modelPlayer->bet();
+}
+
+std::vector<QGraphicsItem *> Player::cards() const
+{
+    return _cards;
 }
 } // namespace Scene

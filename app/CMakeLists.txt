@@ -47,6 +47,8 @@ set(PROJECT_SOURCES
     src/gameScene/items/popup/popup.cpp
     src/enums/resultEnums/resultenums.h
     src/enums/resultEnums/resultenums.cpp
+    src/gameScene/items/cashLabel/cashlabel.h
+    src/gameScene/items/cashLabel/cashlabel.cpp
 )
 
 add_executable(${PROJECT_NAME}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "items/players/iplayer.h"
+#include "items/players/player/player.h"
 
 #include <QGraphicsItem>
 
@@ -13,34 +13,18 @@ namespace Scene
 {
 class PointLabel;
 
-class Dealer : public IPlayer, public QGraphicsItem
+class Dealer : public Player
 {
 public:
     Dealer(Model::IPlayer *modelDealer);
 
-    QRectF boundingRect() const override;
-
     void updateCards() override;
-    void addCard(QGraphicsItem *card) override;
-    unsigned modelId() const override;
     void init() override;
-    void setupPointLabel() override;
-    void updatePointLabel() override;
-    Result result() const override;
-    QPointF cardStart() override;
-    void clearCards() override;
-    int cardsSize() const override;
 
     int showClosedCard();
     int currentScore();
 
-protected:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
 private:
-    std::vector<QGraphicsItem *> _cards;
     Model::IPlayer *_modelDealer;
-    PointLabel *_pointLabel;
-    QPointF _cardStart;
 };
 } // namespace Scene

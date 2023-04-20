@@ -3,6 +3,7 @@
 #include "enums/resultEnums/resultenums.h"
 #include "items/buttonItem/buttonitem.h"
 #include "items/cardItem/icard.h"
+#include "items/cashLabel/cashlabel.h"
 #include "items/dibItem/dibitem.h"
 #include "items/factory/cardfactory.h"
 #include "items/labels/betLabel/betlabel.h"
@@ -45,6 +46,7 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     createDib();
     createPlayers();
     addPlayersToScene();
+    addCashLabelToScene();
     setupPopup();
     startGame();
 }
@@ -152,6 +154,16 @@ void SceneController::createPlayers()
     }
 }
 
+void SceneController::addCashLabelToScene()
+{
+    _cashLabel = new Scene::CashLabel(_players.back());
+    _scene->addItem(_cashLabel);
+
+    QPointF labelPos{ _scene->sceneRect().left(),
+                      _scene->sceneRect().bottom() - _cashLabel->boundingRect().height() };
+    _cashLabel->setPos(labelPos);
+}
+
 void SceneController::stand()
 {
     Scene::Dealer *dealer = dynamic_cast<Scene::Dealer *>(_players.front());
@@ -239,6 +251,7 @@ void SceneController::connectSignals()
 void SceneController::summaryResults()
 {
     _restartPopup->updateText(getResultText(_players.back()->result()));
+    _cashLabel->updateContent();
     _restartPopup->show();
 }
 

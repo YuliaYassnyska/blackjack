@@ -14,5 +14,8 @@ public:
     virtual bool isLoser() const = 0;
     virtual void lose() = 0;
     virtual void clearCards() = 0;
+    virtual int cash() const = 0;
+    virtual int bet() const = 0;
+    virtual void win() = 0;
 };
 } // namespace Model
