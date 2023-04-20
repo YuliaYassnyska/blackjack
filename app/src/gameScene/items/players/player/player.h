@@ -29,14 +29,18 @@ public:
     QPointF cardStart() override;
     void clearCards() override;
     int cardsSize() const override;
+    int cash() const override;
+    int bet() const override;
+    std::vector<QGraphicsItem *> cards() const override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+    QPointF _cardPoint;
 
 private:
     std::vector<QGraphicsItem *> _cards;
     Model::IPlayer *_modelPlayer;
     PointLabel *_pointLabel;
-    QPointF _cardStart;
 };
 } // namespace Scene
