@@ -20,6 +20,7 @@
 SceneController::SceneController(QGraphicsScene *scene, ModelController *modelController,
                                  Theme theme)
     : _modelController{ modelController },
+      _deckPlace{ new QGraphicsRectItem },
       _theme{ theme },
       _scene{ scene },
       _hitButton{ new Scene::ButtonItem(":/images/buttons/resources/hit.png",
@@ -33,7 +34,7 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
 {
     createCards();
     addCardsToScene();
-    makeDeck();
+    initDeckPlace();
     createButtons();
     createDib();
     createPlayers();
@@ -56,6 +57,18 @@ void SceneController::createCards()
     }
 }
 
+void SceneController::initDeckPlace()
+{
+    _scene->addItem(_deckPlace);
+
+    const double deckMargin{ 20 };
+
+    QRectF cardRect{ dynamic_cast<QGraphicsItem *>(_cards.front())->boundingRect() };
+    QPointF deckPos{ _scene->sceneRect().topRight().x() - cardRect.width() - deckMargin,
+                     _scene->sceneRect().topRight().y() + deckMargin };
+    _deckPlace->setPos(deckPos);
+}
+
 void SceneController::addCardsToScene()
 {
     for (auto *card : cards())
@@ -67,21 +80,18 @@ void SceneController::addCardsToScene()
 
 void SceneController::makeDeck()
 {
-    const double deckMargin{ 20 };
     double moveMargin{ 0 };
-
     for (auto *card : cards())
     {
-        auto *item{ dynamic_cast<QGraphicsItem *>(card) };
+        card->close();
 
-        QPointF deckPos{ _scene->sceneRect().topRight().x() - item->boundingRect().width()
-                             - moveMargin - deckMargin,
-                         _scene->sceneRect().topRight().y() + deckMargin + moveMargin };
+        auto *item{ dynamic_cast<QGraphicsItem *>(card) };
 
         if (item == nullptr)
             continue;
 
-        item->setPos(deckPos);
+        item->setParentItem(nullptr);
+        item->setPos(_deckPlace->mapToScene(-moveMargin, moveMargin));
         moveMargin += 0.1;
     }
     _lastCardInDeck = cards().size() - 1;

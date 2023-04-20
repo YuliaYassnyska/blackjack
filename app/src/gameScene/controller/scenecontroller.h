@@ -28,6 +28,7 @@ public:
 
 private:
     void createCards();
+    void initDeckPlace();
     void addCardsToScene();
     void makeDeck();
     void createButtons();
@@ -45,6 +46,7 @@ private:
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
     ModelController *_modelController;
+    QGraphicsItem *_deckPlace;
     Theme _theme;
     QGraphicsItem *_hitButton;
     QGraphicsItem *_standButton;
