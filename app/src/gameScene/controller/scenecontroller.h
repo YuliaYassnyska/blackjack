@@ -24,6 +24,8 @@ class SceneController : public QObject
     Q_OBJECT
 public:
     SceneController(QGraphicsScene *scene, ModelController *modelController, Theme theme);
+    ~SceneController();
+
     std::vector<Scene::ICard *> cards();
 
 private:
@@ -41,7 +43,11 @@ private:
     void moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *player);
     void updateCurrentPlayerCards(QGraphicsItem *item);
     void connectSignals();
+    void summaryResults();
+    void startGame();
     void setupPopup();
+    void clearPlayersCards();
+    void getInitialPlayersMoves();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;

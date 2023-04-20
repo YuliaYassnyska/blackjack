@@ -1,5 +1,6 @@
 #include "scenecontroller.h"
 #include "animations/cardAnimator/cardanimator.h"
+#include "enums/resultEnums/resultenums.h"
 #include "items/buttonItem/buttonitem.h"
 #include "items/cardItem/icard.h"
 #include "items/dibItem/dibitem.h"
@@ -40,7 +41,18 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     createPlayers();
     addPlayersToScene();
     setupPopup();
+    startGame();
+
     connectSignals();
+}
+
+SceneController::~SceneController()
+{
+    delete _hitButton;
+    delete _standButton;
+    delete _dib;
+    delete _dibLabel;
+    delete _restartPopup;
 }
 
 std::vector<Scene::ICard *> SceneController::cards()
@@ -208,6 +220,26 @@ void SceneController::connectSignals()
 {
     QObject::connect(_cardAnimator, &Scene::CardAnimator::animated, this,
                      &SceneController::updateCurrentPlayerCards);
+    QObject::connect(_modelController, &ModelController::roundEnd, this,
+                     &SceneController::summaryResults);
+}
+
+void SceneController::summaryResults()
+{
+    _restartPopup->updateText(getResultText(_players.back()->result()));
+    _restartPopup->show();
+}
+
+void SceneController::startGame()
+{
+    _restartPopup->hide();
+    _lastCardInDeck = 0;
+    makeDeck();
+    clearPlayersCards();
+    // TODO: refactor this!
+    //    getInitialPlayersMoves();
+}
+
 void SceneController::setupPopup()
 {
     _scene->addItem(_restartPopup);
@@ -216,4 +248,22 @@ void SceneController::setupPopup()
     _restartPopup->setPos(popupPos);
     _restartPopup->setupContent();
 }
+
+void SceneController::clearPlayersCards()
+{
+    _modelController->clearPlayerCards();
+    for (auto *player : _players)
+    {
+        player->updatePointLabel();
+        player->clearCards();
+    }
+}
+
+void SceneController::getInitialPlayersMoves()
+{
+    addCardForPlayer();
+    addCardForPlayer();
+    changeTurn();
+    addCardForPlayer();
+    addCardForPlayer();
 }
