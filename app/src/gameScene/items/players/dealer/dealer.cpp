@@ -7,7 +7,8 @@
 
 namespace Scene
 {
-Dealer::Dealer(Model::IPlayer *modelDealer) : Player{ modelDealer }, _modelDealer{ modelDealer }
+Dealer::Dealer(Model::IPlayer *modelDealer)
+    : Player{ modelDealer }, _modelDealer{ modelDealer }, _pointLabel{ new PointLabel(0) }
 {
 }
 
@@ -27,6 +28,15 @@ void Dealer::updateCards()
         card->setZValue(zValue++);
         cardOffset += stepOffset;
     }
+}
+
+void Dealer::setupPointLabel()
+{
+    scene()->addItem(_pointLabel);
+    _pointLabel->setParentItem(this);
+    QPointF labelPos{ (boundingRect().width() - _pointLabel->boundingRect().width()) / 2,
+                      boundingRect().bottom() };
+    _pointLabel->setPos(labelPos);
 }
 
 void Dealer::init()

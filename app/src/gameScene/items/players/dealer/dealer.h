@@ -20,11 +20,13 @@ public:
 
     void updateCards() override;
     void init() override;
+    void setupPointLabel() override;
 
     int showClosedCard();
     int currentScore();
 
 private:
     Model::IPlayer *_modelDealer;
+    PointLabel *_pointLabel;
 };
 } // namespace Scene
