@@ -1,5 +1,6 @@
 #pragma once
 
+#include "enums/resultEnums/resultenums.h"
 #include "items/cardItem/icard.h"
 
 #include <QPointF>
@@ -18,5 +19,8 @@ public:
     virtual void setupPointLabel() = 0;
     virtual void updatePointLabel() = 0;
     virtual QPointF cardStart() = 0;
+    virtual Result result() const = 0;
+    virtual void clearCards() = 0;
+    virtual int cardsSize() const = 0;
 };
 } // namespace Scene

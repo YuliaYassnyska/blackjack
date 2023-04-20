@@ -66,6 +66,11 @@ void Dealer::updatePointLabel()
     _pointLabel->updateText(_modelDealer->score());
 }
 
+Result Dealer::result() const
+{
+    return _modelDealer->isLoser() ? Result::LOSER : Result::WINNER;
+}
+
 QPointF Dealer::cardStart()
 {
     const int stepOffset{ 30 };
@@ -77,6 +82,29 @@ QPointF Dealer::cardStart()
                           (boundingRect().height() - cardsSize.height()) / 2 };
 
     return mapToScene(_cardStart);
+}
+
+void Dealer::clearCards()
+{
+    _cards.clear();
+}
+
+int Dealer::cardsSize() const
+{
+    return _cards.size();
+}
+
+int Dealer::showClosedCard()
+{
+    ICard *card{ dynamic_cast<ICard *>(_cards.front()) };
+    card->open();
+
+    return card->modelId();
+}
+
+int Dealer::currentScore()
+{
+    return _modelDealer->score();
 }
 
 void Dealer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

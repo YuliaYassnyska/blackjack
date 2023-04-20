@@ -52,11 +52,13 @@ QRectF CardItem::boundingRect() const
 void CardItem::open()
 {
     _isOpen = true;
+    update();
 }
 
 void CardItem::close()
 {
     _isOpen = false;
+    update();
 }
 
 void CardItem::setPos(double x, double y)

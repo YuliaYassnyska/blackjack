@@ -29,19 +29,32 @@ void Player::addCard(ICard *card)
 
 bool Player::isAceWithСourtiers()
 {
-    if (std::find_if(_cards.begin(), _cards.end(),
-                     [](ICard *card) {
-                         return card->card() == Card::Jack || card->card() == Card::Queen
-                                || card->card() == Card::King;
-                     })
-        != _cards.end())
-        return true;
-    else
-        return false;
+    const auto it{ std::find_if(_cards.cbegin(), _cards.cend(),
+                                [](ICard *card)
+                                {
+                                    return card->card() == Card::Jack || card->card() == Card::Queen
+                                           || card->card() == Card::King;
+                                }) };
+    return it != _cards.end();
 }
 
 unsigned Player::id() const
 {
     return _id;
+}
+
+bool Player::isLoser() const
+{
+    return _isLoser;
+}
+
+void Player::lose()
+{
+    _isLoser = true;
+}
+
+void Player::clearCards()
+{
+    _cards.clear();
 }
 } // namespace Model

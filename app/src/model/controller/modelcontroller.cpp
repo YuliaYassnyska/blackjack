@@ -47,6 +47,44 @@ void ModelController::addCardForPlayer(unsigned playerId, unsigned cardId, bool 
     card->setOpen(isOpen);
 
     player->addCard(card);
+
+    checkLoser(player);
+}
+
+void ModelController::checkLoser(Model::IPlayer *player)
+{
+    if (player->score() > 21)
+    {
+        player->lose();
+        emit roundEnd();
+    }
+}
+
+void ModelController::clearPlayerCards()
+{
+    for (auto *player : _players)
+    {
+        player->clearCards();
+        player->score();
+    }
+}
+
+void ModelController::setCardOpen(unsigned cardId, bool isOpen)
+{
+    auto *card{ cardById(cardId) };
+    card->setOpen(isOpen);
+}
+
+void ModelController::summaryResults(unsigned playerId)
+{
+
+    auto dealer{ playerById(playerId) };
+
+    for (auto *player : _players)
+        if (player != dealer && player->score() < dealer->score())
+            player->lose();
+
+    emit roundEnd();
 }
 
 Model::IPlayer *ModelController::playerById(unsigned playerId) const

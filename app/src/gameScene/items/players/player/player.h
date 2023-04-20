@@ -25,7 +25,10 @@ public:
     void init() override;
     void setupPointLabel() override;
     void updatePointLabel() override;
+    Result result() const override;
     QPointF cardStart() override;
+    void clearCards() override;
+    int cardsSize() const override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;

@@ -8,17 +8,19 @@
 namespace Scene
 {
 CardAnimator::CardAnimator(QObject *parent)
-    : _timer{ new QTimeLine(1000, parent) }, _animation{ new QGraphicsItemAnimation(parent) }
+    : _timer{ new QTimeLine(500, parent) }, _animation{ new QGraphicsItemAnimation(parent) }
 {
     _animation->setTimeLine(_timer);
-    _timer->setFrameRange(0, 100);
+    _timer->setFrameRange(0, 1000);
 
     connect(_timer, &QTimeLine::finished, this, &CardAnimator::onTimerFinished);
 }
 
-void CardAnimator::moveTo(QPointF pos)
+void CardAnimator::moveToPlayer(Scene::IPlayer *player)
 {
-    _animation->setPosAt(1 / 2.0, pos);
+    _player = player;
+
+    _animation->setPosAt(1 / 2.0, _player->cardStart());
 
     _timer->start();
 }
@@ -35,6 +37,6 @@ bool CardAnimator::isRunning()
 
 void CardAnimator::onTimerFinished()
 {
-    emit animated(_animation->item());
+    emit animated(_animation->item(), _player);
 }
 } // namespace Scene
