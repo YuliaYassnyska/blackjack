@@ -45,6 +45,8 @@ set(PROJECT_SOURCES
     src/gameScene/animations/cardAnimator/cardanimator.cpp
     src/gameScene/items/popup/popup.h
     src/gameScene/items/popup/popup.cpp
+    src/enums/resultEnums/resultenums.h
+    src/enums/resultEnums/resultenums.cpp
 )
 
 add_executable(${PROJECT_NAME}
