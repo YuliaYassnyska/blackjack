@@ -31,7 +31,8 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _dib{ new Scene::DibItem(":/images/resources/dib.png") },
       _dibLabel{ new Scene::BetLabel(5) },
       _cardAnimator{ new Scene::CardAnimator(this) },
-      _restartPopup{ new Scene::Popup([this]() { startGame(); }) }
+      _restartPopup{ new Scene::Popup([this]() { startGame(); }) },
+      _addCardTimer{ new QTimeLine(50, this) }
 {
     connectSignals();
     createCards();
@@ -40,7 +41,6 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     createButtons();
     createDib();
     createPlayers();
-    takeCardsOnStart();
     addPlayersToScene();
     setupPopup();
     startGame();
@@ -154,17 +154,11 @@ void SceneController::stand()
     _modelController->setCardOpen(cardId, true);
     dealer->updatePointLabel();
 
-    if (dealer->currentScore() < 17)
-        emit addForDealer(dealer);
-
-    summaryResults();
+    addCardsForDealer(dealer);
 }
 
 void SceneController::addCardAfterHit()
 {
-    if (_cardAnimator->isRunning())
-        return;
-
     auto *player{ _players.back() };
 
     addCardForPlayer(player);
@@ -172,6 +166,9 @@ void SceneController::addCardAfterHit()
 
 void SceneController::addCardForPlayer(Scene::IPlayer *player)
 {
+    if (_cardAnimator->isRunning())
+        return;
+
     Scene::ICard *neededCard = _cards.at(_lastCardInDeck);
     QGraphicsItem *card{ dynamic_cast<QGraphicsItem *>(neededCard) };
 
@@ -241,7 +238,7 @@ void SceneController::startGame()
     _restartPopup->hide();
     makeDeck();
     clearPlayersCards();
-    addCardForPlayer(_players.front());
+    takeCardsOnStart();
 }
 
 void SceneController::setupPopup()
@@ -265,35 +262,39 @@ void SceneController::clearPlayersCards()
 
 void SceneController::takeCardsOnStart()
 {
-    connect(this, &SceneController::cardAdded, this, &SceneController::onCardAdded);
+    connect(_addCardTimer, &QTimeLine::finished, this, &SceneController::onCardAdded);
+    _addCardTimer->start();
 }
 
-void SceneController::onCardAdded(unsigned playerId)
+void SceneController::onCardAdded()
 {
-    auto playerIt{ std::find_if(_players.begin(), _players.end(),
-                                [playerId](Scene::IPlayer *player)
-                                { return player->modelId() == playerId; }) };
-    if ((*playerIt)->cardsSize() >= 2)
-        ++playerIt;
-
-    if (playerIt == _players.end() || (*playerIt)->cardsSize() >= 2)
+    auto playerIt{ std::find_if(_players.cbegin(), _players.cend(),
+                                [](Scene::IPlayer *player) { return player->cardsSize() < 2; }) };
+    if (playerIt == _players.cend())
     {
+        disconnect(_addCardTimer, &QTimeLine::finished, this, &SceneController::onCardAdded);
         return;
     }
 
     addCardForPlayer(*playerIt);
+    _addCardTimer->start();
 }
 
 void SceneController::addCardsForDealer(Scene::Dealer *dealer)
 {
-    connect(this, &SceneController::cardAdded,
+    connect(_addCardTimer, &QTimeLine::finished,
             [dealer, this]() { SceneController::onAddForDealer(dealer); });
-    if (dealer->currentScore() < 17)
-        addCardForPlayer(dealer);
+    _addCardTimer->start();
 }
 
 void SceneController::onAddForDealer(Scene::Dealer *dealer)
 {
-    if (dealer->currentScore() < 17)
-        addCardForPlayer(dealer);
+    if (dealer->currentScore() >= 17)
+    {
+        disconnect(_addCardTimer, nullptr, nullptr, nullptr);
+        _modelController->summaryResults(dealer->modelId());
+        return;
+    }
+    addCardForPlayer(dealer);
+    _addCardTimer->start();
 }

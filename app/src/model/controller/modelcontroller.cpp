@@ -58,11 +58,6 @@ void ModelController::checkLoser(Model::IPlayer *player)
         player->lose();
         emit roundEnd();
     }
-    else if (player->score() < _players.front()->score())
-    {
-        player->lose();
-        emit roundEnd();
-    }
 }
 
 void ModelController::clearPlayerCards()
@@ -78,6 +73,18 @@ void ModelController::setCardOpen(unsigned cardId, bool isOpen)
 {
     auto *card{ cardById(cardId) };
     card->setOpen(isOpen);
+}
+
+void ModelController::summaryResults(unsigned playerId)
+{
+
+    auto dealer{ playerById(playerId) };
+
+    for (auto *player : _players)
+        if (player != dealer && player->score() < dealer->score())
+            player->lose();
+
+    emit roundEnd();
 }
 
 Model::IPlayer *ModelController::playerById(unsigned playerId) const

@@ -19,6 +19,7 @@ class ModelController;
 class QGraphicsScene;
 class QGraphicsItem;
 class QWidget;
+class QTimeLine;
 
 class SceneController : public QObject
 {
@@ -52,7 +53,7 @@ private:
     void clearPlayersCards();
     void takeCardsOnStart();
 
-    void onCardAdded(unsigned playerId);
+    void onCardAdded();
     void addCardsForDealer(Scene::Dealer *dealer);
     void onAddForDealer(Scene::Dealer *dealer);
 
@@ -69,4 +70,6 @@ private:
     std::vector<Scene::IPlayer *> _players;
     Scene::CardAnimator *_cardAnimator;
     Scene::Popup *_restartPopup;
+
+    QTimeLine *_addCardTimer{ nullptr };
 };
