@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QObject>
-#include <QPointF>
 
 #include <vector>
 
@@ -20,18 +19,19 @@ class CardAnimator : public QObject
 public:
     explicit CardAnimator(QObject *parent);
 
-    void moveTo(QPointF pos);
+    void moveToPlayer(Scene::IPlayer *player);
     void setCard(QGraphicsItem *card);
 
     bool isRunning();
 
 signals:
-    void animated(QGraphicsItem *card);
+    void animated(QGraphicsItem *card, Scene::IPlayer *player);
 
 private:
     void onTimerFinished();
 
-    QTimeLine *_timer;
-    QGraphicsItemAnimation *_animation;
+    QTimeLine *_timer{ nullptr };
+    Scene::IPlayer *_player{ nullptr };
+    QGraphicsItemAnimation *_animation{ nullptr };
 };
 } // namespace Scene
