@@ -37,7 +37,7 @@ void ModelController::createPlayers()
 {
     unsigned id{ 0 };
     while (id < 2)
-        _players.push_back(new Model::Player(id++));
+        _players.push_back(new Model::Player(id++, 100));
 }
 
 void ModelController::addCardForPlayer(unsigned playerId, unsigned cardId, bool isOpen)
@@ -65,7 +65,6 @@ void ModelController::clearPlayerCards()
     for (auto *player : _players)
     {
         player->clearCards();
-        player->score();
     }
 }
 
@@ -81,8 +80,17 @@ void ModelController::summaryResults(unsigned playerId)
     auto dealer{ playerById(playerId) };
 
     for (auto *player : _players)
-        if (player != dealer && player->score() < dealer->score())
-            player->lose();
+    {
+        if (player != dealer)
+        {
+            int playerScore{ player->score() };
+            int dealerScore{ dealer->score() };
+            if (playerScore < dealerScore)
+                player->lose();
+            else
+                player->win();
+        }
+    }
 
     emit roundEnd();
 }
