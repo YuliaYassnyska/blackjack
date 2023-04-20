@@ -18,7 +18,7 @@ class CardAnimator : public QObject
 {
     Q_OBJECT
 public:
-    CardAnimator(QObject *parent);
+    explicit CardAnimator(QObject *parent);
 
     void moveTo(QPointF pos);
     void setCard(QGraphicsItem *card);
