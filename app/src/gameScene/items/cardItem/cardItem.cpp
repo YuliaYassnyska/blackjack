@@ -11,7 +11,6 @@ CardItem::CardItem(const QString &themePath, const QString &imageFrontPath,
       _imageBack{ QPixmap{ themePath + imageBackPath }.scaled(boundingRect().size().toSize()) },
       _modelId{ modelId }
 {
-    setFlags(ItemIsMovable);
 }
 
 void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/,
