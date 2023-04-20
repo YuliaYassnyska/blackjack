@@ -57,6 +57,7 @@
         <file>resources/lightMode/spades/two.png</file>
         <file>resources/lightMode/back_side.jpg</file>
         <file>resources/dib.png</file>
+        <file>resources/restart.png</file>
     </qresource>
     <qresource prefix="/images/buttons">
         <file>resources/hit.png</file>

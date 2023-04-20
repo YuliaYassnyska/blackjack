@@ -43,6 +43,8 @@ set(PROJECT_SOURCES
     src/model/items/players/player/player.cpp
     src/gameScene/animations/cardAnimator/cardanimator.h
     src/gameScene/animations/cardAnimator/cardanimator.cpp
+    src/gameScene/items/popup/popup.h
+    src/gameScene/items/popup/popup.cpp
 )
 
 add_executable(${PROJECT_NAME}

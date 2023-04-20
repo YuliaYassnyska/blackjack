@@ -7,6 +7,7 @@
 #include "items/labels/betLabel/betlabel.h"
 #include "items/players/dealer/dealer.h"
 #include "items/players/player/player.h"
+#include "items/popup/popup.h"
 #include "model/controller/modelcontroller.h"
 #include "model/items/players/iplayer.h"
 
@@ -27,7 +28,8 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
                                           [this]() { playersResults(); }) },
       _dib{ new Scene::DibItem(":/images/resources/dib.png") },
       _dibLabel{ new Scene::BetLabel(5) },
-      _cardAnimator{ new Scene::CardAnimator(scene) }
+      _cardAnimator{ new Scene::CardAnimator(this) },
+      _restartPopup{ new Scene::Popup([this]() { startGame(); }) }
 {
     createCards();
     addCardsToScene();
@@ -36,6 +38,7 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     createDib();
     createPlayers();
     addPlayersToScene();
+    setupPopup();
     connectSignals();
 }
 
@@ -195,4 +198,12 @@ void SceneController::connectSignals()
 {
     QObject::connect(_cardAnimator, &Scene::CardAnimator::animated, this,
                      &SceneController::updateCurrentPlayerCards);
+void SceneController::setupPopup()
+{
+    _scene->addItem(_restartPopup);
+    QPointF popupPos{ (_scene->sceneRect().width() - _restartPopup->boundingRect().width()) / 2,
+                      (_scene->sceneRect().height() - _restartPopup->boundingRect().height()) / 2 };
+    _restartPopup->setPos(popupPos);
+    _restartPopup->setupContent();
+}
 }

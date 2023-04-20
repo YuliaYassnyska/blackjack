@@ -11,6 +11,7 @@ namespace Scene
 {
 class ICard;
 class CardAnimator;
+class Popup;
 } // namespace Scene
 class ModelController;
 
@@ -39,6 +40,7 @@ private:
     void moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *player);
     void updateCurrentPlayerCards(QGraphicsItem *item);
     void connectSignals();
+    void setupPopup();
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
@@ -52,4 +54,5 @@ private:
     int _currentPlayerTurn{ 0 };
     std::vector<Scene::IPlayer *> _players;
     Scene::CardAnimator *_cardAnimator;
+    Scene::Popup *_restartPopup;
 };
