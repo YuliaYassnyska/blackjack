@@ -37,6 +37,7 @@ private:
     void initDeckPlace();
     void addCardsToScene();
     void makeDeck();
+    void shuffleDeck();
     void createButtons();
     void createDib();
     void createPlayers();
