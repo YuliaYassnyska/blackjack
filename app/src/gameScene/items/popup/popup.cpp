@@ -15,7 +15,7 @@ Popup::Popup(std::function<void()> callback)
 
 QRectF Popup::boundingRect() const
 {
-    return QRectF(0, 0, 500, 500);
+    return QRectF(0, 0, 950, 600);
 }
 
 void Popup::updateText(QString text)
