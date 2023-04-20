@@ -21,6 +21,7 @@ public:
     void addCardForPlayer(unsigned playerId, unsigned cardId, bool isOpen);
     void checkLoser(Model::IPlayer *player);
     void clearPlayerCards();
+    void setCardOpen(unsigned cardId, bool isOpen);
 
 signals:
     void roundEnd();
