@@ -18,6 +18,9 @@
 #include <QGraphicsScene>
 #include <QTimeLine>
 
+#include <algorithm>
+#include <random>
+
 SceneController::SceneController(QGraphicsScene *scene, ModelController *modelController,
                                  Theme theme)
     : _modelController{ modelController },
@@ -101,6 +104,12 @@ void SceneController::makeDeck()
         moveMargin += 0.1;
     }
     _lastCardInDeck = 0;
+}
+
+void SceneController::shuffleDeck()
+{
+    auto rng = std::default_random_engine{};
+    std::shuffle(std::begin(_cards), std::end(_cards), rng);
 }
 
 void SceneController::createButtons()
@@ -236,6 +245,7 @@ void SceneController::summaryResults()
 void SceneController::startGame()
 {
     _restartPopup->hide();
+    shuffleDeck();
     makeDeck();
     clearPlayersCards();
     takeCardsOnStart();
