@@ -68,6 +68,11 @@ void Player::updatePointLabel()
     _pointLabel->updateText(_modelPlayer->score());
 }
 
+Result Player::result() const
+{
+    return _modelPlayer->isLoser() ? Result::LOSER : Result::WINNER;
+}
+
 QPointF Player::cardStart()
 {
     const int stepOffset{ 30 };
@@ -79,5 +84,10 @@ QPointF Player::cardStart()
                           (boundingRect().height() - cardsSize.height()) / 2 };
 
     return mapToScene(_cardStart);
+}
+
+void Player::clearCards()
+{
+    _cards.clear();
 }
 } // namespace Scene
