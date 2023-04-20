@@ -13,6 +13,7 @@ class ICard;
 class CardAnimator;
 class Popup;
 class Dealer;
+class CashLabel;
 } // namespace Scene
 class ModelController;
 
@@ -41,6 +42,7 @@ private:
     void createButtons();
     void createDib();
     void createPlayers();
+    void addCashLabelToScene();
     void stand();
     void addCardAfterHit();
     void addCardForPlayer(Scene::IPlayer *player);
@@ -71,6 +73,7 @@ private:
     std::vector<Scene::IPlayer *> _players;
     Scene::CardAnimator *_cardAnimator;
     Scene::Popup *_restartPopup;
+    Scene::CashLabel *_cashLabel{ nullptr };
 
     QTimeLine *_addCardTimer{ nullptr };
 };
