@@ -25,25 +25,25 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _theme{ theme },
       _scene{ scene },
       _hitButton{ new Scene::ButtonItem(":/images/buttons/resources/hit.png",
-                                        [this]() { addCardForPlayer(); }) },
+                                        [this]() { addCardAfterHit(); }) },
       _standButton{ new Scene::ButtonItem(":/images/buttons/resources/stand.png",
-                                          [this]() { playersResults(); }) },
+                                          [this]() { stand(); }) },
       _dib{ new Scene::DibItem(":/images/resources/dib.png") },
       _dibLabel{ new Scene::BetLabel(5) },
       _cardAnimator{ new Scene::CardAnimator(this) },
       _restartPopup{ new Scene::Popup([this]() { startGame(); }) }
 {
+    connectSignals();
     createCards();
     addCardsToScene();
     initDeckPlace();
     createButtons();
     createDib();
     createPlayers();
+    takeCardsOnStart();
     addPlayersToScene();
     setupPopup();
     startGame();
-
-    connectSignals();
 }
 
 SceneController::~SceneController()
@@ -53,11 +53,6 @@ SceneController::~SceneController()
     delete _dib;
     delete _dibLabel;
     delete _restartPopup;
-}
-
-std::vector<Scene::ICard *> SceneController::cards()
-{
-    return _cards;
 }
 
 void SceneController::createCards()
@@ -83,7 +78,7 @@ void SceneController::initDeckPlace()
 
 void SceneController::addCardsToScene()
 {
-    for (auto *card : cards())
+    for (auto *card : _cards)
     {
         auto *item{ dynamic_cast<QGraphicsItem *>(card) };
         _scene->addItem(item);
@@ -93,7 +88,7 @@ void SceneController::addCardsToScene()
 void SceneController::makeDeck()
 {
     double moveMargin{ 0 };
-    for (auto *card : cards())
+    for (auto *card : _cards)
     {
         card->close();
 
@@ -102,11 +97,10 @@ void SceneController::makeDeck()
         if (item == nullptr)
             continue;
 
-        item->setParentItem(nullptr);
         item->setPos(_deckPlace->mapToScene(-moveMargin, moveMargin));
         moveMargin += 0.1;
     }
-    _lastCardInDeck = cards().size() - 1;
+    _lastCardInDeck = 0;
 }
 
 void SceneController::createButtons()
@@ -149,27 +143,45 @@ void SceneController::createPlayers()
     }
 }
 
-void SceneController::playersResults()
+void SceneController::stand()
 {
-    changeTurn();
+    Scene::Dealer *dealer = dynamic_cast<Scene::Dealer *>(_players.front());
+
+    if (dealer == nullptr)
+        return;
+
+    auto cardId{ dealer->showClosedCard() };
+    _modelController->setCardOpen(cardId, true);
+    dealer->updatePointLabel();
+
+    if (dealer->currentScore() < 17)
+        emit addForDealer(dealer);
+
+    summaryResults();
 }
 
-void SceneController::addCardForPlayer()
+void SceneController::addCardAfterHit()
 {
     if (_cardAnimator->isRunning())
         return;
 
+    auto *player{ _players.back() };
+
+    addCardForPlayer(player);
+}
+
+void SceneController::addCardForPlayer(Scene::IPlayer *player)
+{
     Scene::ICard *neededCard = _cards.at(_lastCardInDeck);
     QGraphicsItem *card{ dynamic_cast<QGraphicsItem *>(neededCard) };
 
     if (card == nullptr)
         return;
 
-    auto *player{ _players.at(_currentPlayerTurn) };
     card->setZValue(100);
     player->addCard(card);
     moveCardAnimation(card, player);
-    _lastCardInDeck--;
+    _lastCardInDeck++;
 }
 
 void SceneController::addPlayersToScene()
@@ -187,41 +199,35 @@ void SceneController::addPlayersToScene()
     }
 }
 
-void SceneController::changeTurn()
-{
-    if (_currentPlayerTurn == 0)
-        _currentPlayerTurn++;
-    else
-        _currentPlayerTurn -= _currentPlayerTurn;
-}
-
 void SceneController::moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *player)
 {
     _cardAnimator->setCard(card);
-    _cardAnimator->moveTo(player->cardStart());
+    _cardAnimator->moveToPlayer(player);
 }
 
-void SceneController::updateCurrentPlayerCards(QGraphicsItem *item)
+void SceneController::updatePlayerCards(QGraphicsItem *item, Scene::IPlayer *player)
 {
     Scene::ICard *card{ dynamic_cast<Scene::ICard *>(item) };
 
     if (card == nullptr)
         return;
 
-    auto *player{ _players.at(_currentPlayerTurn) };
     player->updateCards();
 
     _modelController->addCardForPlayer(player->modelId(), card->modelId(), card->isOpen());
 
     player->updatePointLabel();
+
+    emit cardAdded(player->modelId());
 }
 
 void SceneController::connectSignals()
 {
     QObject::connect(_cardAnimator, &Scene::CardAnimator::animated, this,
-                     &SceneController::updateCurrentPlayerCards);
+                     &SceneController::updatePlayerCards);
     QObject::connect(_modelController, &ModelController::roundEnd, this,
                      &SceneController::summaryResults);
+    QObject::connect(this, &SceneController::addForDealer, this, &SceneController::onAddForDealer);
 }
 
 void SceneController::summaryResults()
@@ -233,11 +239,9 @@ void SceneController::summaryResults()
 void SceneController::startGame()
 {
     _restartPopup->hide();
-    _lastCardInDeck = 0;
     makeDeck();
     clearPlayersCards();
-    // TODO: refactor this!
-    //    getInitialPlayersMoves();
+    addCardForPlayer(_players.front());
 }
 
 void SceneController::setupPopup()
@@ -254,16 +258,42 @@ void SceneController::clearPlayersCards()
     _modelController->clearPlayerCards();
     for (auto *player : _players)
     {
-        player->updatePointLabel();
         player->clearCards();
+        player->updatePointLabel();
     }
 }
 
-void SceneController::getInitialPlayersMoves()
+void SceneController::takeCardsOnStart()
 {
-    addCardForPlayer();
-    addCardForPlayer();
-    changeTurn();
-    addCardForPlayer();
-    addCardForPlayer();
+    connect(this, &SceneController::cardAdded, this, &SceneController::onCardAdded);
+}
+
+void SceneController::onCardAdded(unsigned playerId)
+{
+    auto playerIt{ std::find_if(_players.begin(), _players.end(),
+                                [playerId](Scene::IPlayer *player)
+                                { return player->modelId() == playerId; }) };
+    if ((*playerIt)->cardsSize() >= 2)
+        ++playerIt;
+
+    if (playerIt == _players.end() || (*playerIt)->cardsSize() >= 2)
+    {
+        return;
+    }
+
+    addCardForPlayer(*playerIt);
+}
+
+void SceneController::addCardsForDealer(Scene::Dealer *dealer)
+{
+    connect(this, &SceneController::cardAdded,
+            [dealer, this]() { SceneController::onAddForDealer(dealer); });
+    if (dealer->currentScore() < 17)
+        addCardForPlayer(dealer);
+}
+
+void SceneController::onAddForDealer(Scene::Dealer *dealer)
+{
+    if (dealer->currentScore() < 17)
+        addCardForPlayer(dealer);
 }

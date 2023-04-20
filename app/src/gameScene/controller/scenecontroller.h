@@ -12,6 +12,7 @@ namespace Scene
 class ICard;
 class CardAnimator;
 class Popup;
+class Dealer;
 } // namespace Scene
 class ModelController;
 
@@ -26,7 +27,9 @@ public:
     SceneController(QGraphicsScene *scene, ModelController *modelController, Theme theme);
     ~SceneController();
 
-    std::vector<Scene::ICard *> cards();
+signals:
+    void cardAdded(unsigned playerId);
+    void addForDealer(Scene::Dealer *dealer);
 
 private:
     void createCards();
@@ -36,18 +39,22 @@ private:
     void createButtons();
     void createDib();
     void createPlayers();
-    void playersResults();
-    void addCardForPlayer();
+    void stand();
+    void addCardAfterHit();
+    void addCardForPlayer(Scene::IPlayer *player);
     void addPlayersToScene();
-    void changeTurn();
     void moveCardAnimation(QGraphicsItem *card, Scene::IPlayer *player);
-    void updateCurrentPlayerCards(QGraphicsItem *item);
+    void updatePlayerCards(QGraphicsItem *item, Scene::IPlayer *player);
     void connectSignals();
     void summaryResults();
     void startGame();
     void setupPopup();
     void clearPlayersCards();
-    void getInitialPlayersMoves();
+    void takeCardsOnStart();
+
+    void onCardAdded(unsigned playerId);
+    void addCardsForDealer(Scene::Dealer *dealer);
+    void onAddForDealer(Scene::Dealer *dealer);
 
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
@@ -59,7 +66,6 @@ private:
     QGraphicsItem *_dib;
     QGraphicsItem *_dibLabel;
     int _lastCardInDeck{ 0 };
-    int _currentPlayerTurn{ 0 };
     std::vector<Scene::IPlayer *> _players;
     Scene::CardAnimator *_cardAnimator;
     Scene::Popup *_restartPopup;
