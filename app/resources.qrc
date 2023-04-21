@@ -58,6 +58,7 @@
         <file>resources/lightMode/back_side.jpg</file>
         <file>resources/dib.png</file>
         <file>resources/restart.png</file>
+        <file>resources/new_game.jpeg</file>
     </qresource>
     <qresource prefix="/images/buttons">
         <file>resources/hit.png</file>
