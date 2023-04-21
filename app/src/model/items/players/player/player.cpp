@@ -75,4 +75,9 @@ int Player::bet() const
 {
     return _bet;
 }
+
+void Player::resetCash()
+{
+    _cash = 100;
+}
 } // namespace Model

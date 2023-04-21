@@ -17,5 +17,6 @@ public:
     virtual int cash() const = 0;
     virtual int bet() const = 0;
     virtual void win() = 0;
+    virtual void resetCash() = 0;
 };
 } // namespace Model

@@ -21,6 +21,7 @@ public:
     void clearCards() override;
     int cash() const override;
     int bet() const override;
+    void resetCash() override;
 
 private:
     std::vector<ICard *> _cards;
