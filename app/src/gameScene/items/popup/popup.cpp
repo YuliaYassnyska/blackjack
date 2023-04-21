@@ -6,8 +6,8 @@
 
 namespace Scene
 {
-Popup::Popup(std::function<void()> callback)
-    : _restartButton{ new ButtonItem(":/images/resources/restart.png", callback) }
+Popup::Popup(std::function<void()> callback, const QString &imagePath)
+    : _restartButton{ new ButtonItem(imagePath, callback) }
 {
     hide();
     setZValue(200);
