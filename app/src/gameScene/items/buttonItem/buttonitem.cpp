@@ -27,6 +27,7 @@ void ButtonItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*opt
                              rect.height() - penWidth * 2 } };
 
     painter->setRenderHint(QPainter::Antialiasing);
+    painter->setPen(Qt::white);
     painter->setBackgroundMode(Qt::BGMode::OpaqueMode);
     painter->setBackground(Qt::white);
     painter->setBrush(_image);

@@ -32,6 +32,7 @@ void BetLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
     std::string text{ "$" + std::to_string(_value) };
 
     painter->setRenderHint(QPainter::Antialiasing);
+    painter->setPen(Qt::white);
     painter->setBrush(Qt::black);
     painter->drawRoundedRect(borderRect, cornerRadius, cornerRadius);
     painter->setFont(font);

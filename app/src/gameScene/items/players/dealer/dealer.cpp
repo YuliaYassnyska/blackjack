@@ -57,4 +57,9 @@ int Dealer::currentScore()
 {
     return _modelDealer->score();
 }
+
+void Dealer::updatePointLabel()
+{
+    _pointLabel->updateText(_modelDealer->score());
+}
 } // namespace Scene

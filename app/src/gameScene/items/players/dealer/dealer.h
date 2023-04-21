@@ -21,6 +21,7 @@ public:
     void updateCards() override;
     void init() override;
     void setupPointLabel() override;
+    void updatePointLabel() override;
 
     int showClosedCard();
     int currentScore();

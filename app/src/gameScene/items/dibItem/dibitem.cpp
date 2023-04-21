@@ -23,6 +23,7 @@ void DibItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
                              rect.height() - penWidth * 2 } };
 
     painter->setRenderHint(QPainter::Antialiasing);
+    painter->setPen(Qt::white);
     painter->setBackgroundMode(Qt::BGMode::OpaqueMode);
     painter->setBackground(Qt::white);
     painter->setBrush(_image);
