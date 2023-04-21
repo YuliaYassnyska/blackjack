@@ -112,4 +112,9 @@ std::vector<QGraphicsItem *> Player::cards() const
 {
     return _cards;
 }
+
+void Player::resetCash()
+{
+    _modelPlayer->resetCash();
+}
 } // namespace Scene
