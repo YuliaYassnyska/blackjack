@@ -10,6 +10,7 @@
 #include "items/players/dealer/dealer.h"
 #include "items/players/player/player.h"
 #include "items/popup/popup.h"
+#include "items/themeItem/themeitem.h"
 #include "media/media.h"
 #include "model/controller/modelcontroller.h"
 #include "model/items/players/iplayer.h"
@@ -42,7 +43,9 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _newGamePopup{ new Scene::Popup([this]() { newGame(); },
                                       ":/images/resources/new_game.jpeg") },
       _addCardTimer{ new QTimeLine(50, this) },
-      _media{ new Scene::Media() }
+      _media{ new Scene::Media() },
+      _lightThemeButton{ new Scene::ThemeItem("light", [this]() { setLightTheme(); }) },
+      _darkThemeButton{ new Scene::ThemeItem("dark", [this]() { setDarkTheme(); }) }
 {
     connectSignals();
     createCards();
@@ -54,6 +57,7 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     createPlayers();
     addPlayersToScene();
     addCashLabelToScene();
+    createThemeButtons();
     setupPopup();
 }
 
@@ -66,6 +70,8 @@ SceneController::~SceneController()
     delete _restartPopup;
     delete _newGamePopup;
     delete _media;
+    delete _lightThemeButton;
+    delete _darkThemeButton;
 }
 
 void SceneController::createCards()
@@ -185,6 +191,21 @@ void SceneController::createNewGamePopup()
     _newGamePopup->setupContent();
     _newGamePopup->show();
     _newGamePopup->updateText(getGameText(Game::NEW));
+}
+
+void SceneController::createThemeButtons()
+{
+    _scene->addItem(_lightThemeButton);
+    _scene->addItem(_darkThemeButton);
+
+    QPointF lightPos{ _scene->sceneRect().right() - _lightThemeButton->boundingRect().width(),
+                      _scene->sceneRect().bottom() - _lightThemeButton->boundingRect().height() };
+    _lightThemeButton->setPos(lightPos);
+
+    QPointF darkPos{ _scene->sceneRect().right() - _lightThemeButton->boundingRect().width(),
+                     _scene->sceneRect().bottom() - _lightThemeButton->boundingRect().height() - 10
+                         - _darkThemeButton->boundingRect().height() };
+    _darkThemeButton->setPos(darkPos);
 }
 
 void SceneController::stand()
@@ -369,4 +390,16 @@ void SceneController::setupMediaForPopup()
 {
     _media->addMedia("qrc:/music/resources/background.mp3", 30);
     _media->play();
+}
+
+void SceneController::setLightTheme()
+{
+    for (auto *card : _cards)
+        card->updateTheme(":/images/resources" + getThemePath(Theme::Light));
+}
+
+void SceneController::setDarkTheme()
+{
+    for (auto *card : _cards)
+        card->updateTheme(":/images/resources" + getThemePath(Theme::Dark));
 }
