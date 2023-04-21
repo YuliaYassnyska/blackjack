@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QString>
+
 namespace Model
 {
 class ICard;
@@ -18,5 +20,6 @@ public:
     virtual int bet() const = 0;
     virtual void win() = 0;
     virtual void resetCash() = 0;
+    virtual QString gameOver() = 0;
 };
 } // namespace Model

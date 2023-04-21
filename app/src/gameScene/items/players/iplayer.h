@@ -28,5 +28,6 @@ public:
     virtual int bet() const = 0;
     virtual void resetCash() = 0;
     virtual std::vector<QGraphicsItem *> cards() const = 0;
+    virtual QString checkPlayerCash() = 0;
 };
 } // namespace Scene

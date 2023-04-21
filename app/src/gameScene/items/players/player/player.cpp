@@ -117,4 +117,9 @@ void Player::resetCash()
 {
     _modelPlayer->resetCash();
 }
+
+QString Player::checkPlayerCash()
+{
+    return _modelPlayer->gameOver();
+}
 } // namespace Scene

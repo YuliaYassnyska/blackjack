@@ -22,6 +22,7 @@ public:
     int cash() const override;
     int bet() const override;
     void resetCash() override;
+    QString gameOver() override;
 
 private:
     std::vector<ICard *> _cards;

@@ -78,6 +78,14 @@ int Player::bet() const
 
 void Player::resetCash()
 {
-    _cash = 100;
+    _cash = 5;
+}
+
+QString Player::gameOver()
+{
+    if (_cash <= 0)
+        return getGameText(Game::OVER);
+
+    return QLatin1String("");
 }
 } // namespace Model

@@ -52,7 +52,6 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     addPlayersToScene();
     addCashLabelToScene();
     setupPopup();
-    startGame();
 }
 
 SceneController::~SceneController()
@@ -270,9 +269,19 @@ void SceneController::connectSignals()
 
 void SceneController::summaryResults()
 {
-    _restartPopup->updateText(getResultText(_players.back()->result()));
+    Scene::IPlayer *player{ _players.back() };
+
+    if (player->checkPlayerCash() == getGameText(Game::OVER))
+    {
+        _newGamePopup->updateText(player->checkPlayerCash());
+        _newGamePopup->show();
+    }
+    else
+    {
+        _restartPopup->updateText(getResultText(_players.back()->result()));
+        _restartPopup->show();
+    }
     _cashLabel->updateContent();
-    _restartPopup->show();
 }
 
 void SceneController::startGame()
