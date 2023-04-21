@@ -25,6 +25,8 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*optio
     QRect borderRect{ QRect{ rect.x() + penWidth, rect.y() + penWidth, rect.width() - penWidth * 2,
                              rect.height() - penWidth * 2 } };
 
+    painter->setPen(Qt::white);
+
     if (_isOpen)
         paintFrontSide(painter, borderRect, cornerRadius);
     else
