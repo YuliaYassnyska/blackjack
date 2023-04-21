@@ -43,6 +43,7 @@ private:
     void createDib();
     void createPlayers();
     void addCashLabelToScene();
+    void createNewGamePopup();
     void stand();
     void addCardAfterHit();
     void addCardForPlayer(Scene::IPlayer *player);
@@ -55,6 +56,7 @@ private:
     void setupPopup();
     void clearPlayersCards();
     void takeCardsOnStart();
+    void newGame();
 
     void onCardAdded();
     void addCardsForDealer(Scene::Dealer *dealer);
@@ -74,6 +76,7 @@ private:
     Scene::CardAnimator *_cardAnimator;
     Scene::Popup *_restartPopup;
     Scene::CashLabel *_cashLabel{ nullptr };
+    Scene::Popup *_newGamePopup;
 
     QTimeLine *_addCardTimer{ nullptr };
 };
