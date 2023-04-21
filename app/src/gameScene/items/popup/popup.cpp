@@ -47,7 +47,9 @@ void Popup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setPen(Qt::NoPen);
     painter->setBrush(Qt::darkGray);
+    painter->setOpacity(0.7);
     painter->drawRoundedRect(borderRect, cornerRadius, cornerRadius);
+    painter->setOpacity(1);
     painter->setFont(font);
     painter->setPen(pen);
     painter->drawText(borderRect, Qt::AlignCenter, _text);
