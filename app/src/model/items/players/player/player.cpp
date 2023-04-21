@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include "enums/resultEnums/resultenums.h"
+
 namespace Model
 {
 Player::Player(unsigned id, int cash) : _id{ id }, _cash{ cash }
@@ -78,7 +80,7 @@ int Player::bet() const
 
 void Player::resetCash()
 {
-    _cash = 5;
+    _cash = 100;
 }
 
 QString Player::gameOver()
