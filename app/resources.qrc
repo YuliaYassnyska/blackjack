@@ -64,4 +64,7 @@
         <file>resources/hit.png</file>
         <file>resources/stand.png</file>
     </qresource>
+    <qresource prefix="/music">
+        <file>resources/background.mp3</file>
+    </qresource>
 </RCC>
