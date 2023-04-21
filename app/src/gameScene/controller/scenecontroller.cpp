@@ -35,12 +35,16 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
       _dib{ new Scene::DibItem(":/images/resources/dib.png") },
       _dibLabel{ new Scene::BetLabel(5) },
       _cardAnimator{ new Scene::CardAnimator(this) },
-      _restartPopup{ new Scene::Popup([this]() { startGame(); }) },
+      _restartPopup{ new Scene::Popup([this]() { startGame(); },
+                                      ":/images/resources/restart.png") },
+      _newGamePopup{ new Scene::Popup([this]() { newGame(); },
+                                      ":/images/resources/new_game.jpeg") },
       _addCardTimer{ new QTimeLine(50, this) }
 {
     connectSignals();
     createCards();
     addCardsToScene();
+    createNewGamePopup();
     initDeckPlace();
     createButtons();
     createDib();
@@ -48,7 +52,6 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
     addPlayersToScene();
     addCashLabelToScene();
     setupPopup();
-    startGame();
 }
 
 SceneController::~SceneController()
@@ -58,6 +61,7 @@ SceneController::~SceneController()
     delete _dib;
     delete _dibLabel;
     delete _restartPopup;
+    delete _newGamePopup;
 }
 
 void SceneController::createCards()
@@ -158,10 +162,25 @@ void SceneController::addCashLabelToScene()
 {
     _cashLabel = new Scene::CashLabel(_players.back());
     _scene->addItem(_cashLabel);
+    _cashLabel->setZValue(200);
 
     QPointF labelPos{ _scene->sceneRect().left(),
                       _scene->sceneRect().bottom() - _cashLabel->boundingRect().height() };
     _cashLabel->setPos(labelPos);
+}
+
+void SceneController::createNewGamePopup()
+{
+    _scene->addItem(_newGamePopup);
+
+    QPointF newGamePos{ (_scene->sceneRect().width() - _restartPopup->boundingRect().width()) / 2,
+                        (_scene->sceneRect().height() - _restartPopup->boundingRect().height())
+                            / 2 };
+    _newGamePopup->setPos(newGamePos);
+
+    _newGamePopup->setupContent();
+    _newGamePopup->show();
+    _newGamePopup->updateText(getGameText(Game::NEW));
 }
 
 void SceneController::stand()
@@ -250,9 +269,19 @@ void SceneController::connectSignals()
 
 void SceneController::summaryResults()
 {
-    _restartPopup->updateText(getResultText(_players.back()->result()));
+    Scene::IPlayer *player{ _players.back() };
+
+    if (player->checkPlayerCash() == getGameText(Game::OVER))
+    {
+        _newGamePopup->updateText(player->checkPlayerCash());
+        _newGamePopup->show();
+    }
+    else
+    {
+        _restartPopup->updateText(getResultText(_players.back()->result()));
+        _restartPopup->show();
+    }
     _cashLabel->updateContent();
-    _restartPopup->show();
 }
 
 void SceneController::startGame()
@@ -287,6 +316,14 @@ void SceneController::takeCardsOnStart()
 {
     connect(_addCardTimer, &QTimeLine::finished, this, &SceneController::onCardAdded);
     _addCardTimer->start();
+}
+
+void SceneController::newGame()
+{
+    _newGamePopup->hide();
+    _players.back()->resetCash();
+    _cashLabel->updateContent();
+    startGame();
 }
 
 void SceneController::onCardAdded()

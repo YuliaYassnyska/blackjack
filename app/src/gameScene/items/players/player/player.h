@@ -32,6 +32,8 @@ public:
     int cash() const override;
     int bet() const override;
     std::vector<QGraphicsItem *> cards() const override;
+    void resetCash() override;
+    QString checkPlayerCash() override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;

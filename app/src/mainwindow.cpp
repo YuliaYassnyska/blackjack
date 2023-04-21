@@ -29,7 +29,7 @@ MainWindow::~MainWindow()
 void MainWindow::initWindow()
 {
     setWindowTitle(QStringLiteral("blackjack"));
-    setMinimumSize(950, 600);
+    setFixedSize(950, 600);
     _view->setScene(_scene);
     setCentralWidget(_view);
     _scene->setSceneRect(rect());

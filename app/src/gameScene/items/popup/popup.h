@@ -8,7 +8,7 @@ namespace Scene
 class Popup : public QGraphicsItem
 {
 public:
-    Popup(std::function<void(void)> callback);
+    Popup(std::function<void(void)> callback, const QString &imagePath);
 
     QRectF boundingRect() const override;
 

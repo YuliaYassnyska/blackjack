@@ -12,3 +12,16 @@ QString getResultText(Result result)
 
     return QLatin1String();
 }
+
+QString getGameText(Game game)
+{
+    switch (game)
+    {
+    case Game::NEW:
+        return QStringLiteral("Start your game!");
+    case Game::OVER:
+        return QStringLiteral("Game over :(");
+    }
+
+    return QLatin1String();
+}

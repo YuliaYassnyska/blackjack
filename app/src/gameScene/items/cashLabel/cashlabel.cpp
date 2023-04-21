@@ -12,7 +12,7 @@ CashLabel::CashLabel(IPlayer *player) : _player{ player }
 
 QRectF CashLabel::boundingRect() const
 {
-    return QRectF(0, 0, 100, 50);
+    return QRectF(0, 0, 120, 50);
 }
 
 void CashLabel::updateContent()

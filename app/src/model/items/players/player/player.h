@@ -13,7 +13,7 @@ public:
 
     int score() override;
     void addCard(ICard *card) override;
-    bool isAceWithСourtiers() override;
+    bool isAceWithCourtiers() override;
     unsigned id() const override;
     bool isLoser() const override;
     void lose() override;
@@ -21,6 +21,8 @@ public:
     void clearCards() override;
     int cash() const override;
     int bet() const override;
+    void resetCash() override;
+    QString gameOver() override;
 
 private:
     std::vector<ICard *> _cards;

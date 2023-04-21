@@ -5,6 +5,8 @@
 
 #include <QPointF>
 
+#include <vector>
+
 class QGraphicsItem;
 
 namespace Scene
@@ -24,6 +26,8 @@ public:
     virtual int cardsSize() const = 0;
     virtual int cash() const = 0;
     virtual int bet() const = 0;
+    virtual void resetCash() = 0;
     virtual std::vector<QGraphicsItem *> cards() const = 0;
+    virtual QString checkPlayerCash() = 0;
 };
 } // namespace Scene
