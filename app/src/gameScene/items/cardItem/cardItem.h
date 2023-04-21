@@ -21,14 +21,19 @@ public:
     void setPos(double x, double y) override;
     unsigned modelId() const override;
     bool isOpen() const override;
+    void updateTheme(QString theme) override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/,
                QWidget *widget = nullptr) override;
 
 private:
+    QString _imageFrontPath;
+    QString _imageBackPath;
+
     QPixmap _imageFront;
     QPixmap _imageBack;
+
     bool _isOpen{ false };
     unsigned _modelId;
 

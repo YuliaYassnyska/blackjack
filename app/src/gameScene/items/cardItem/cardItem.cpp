@@ -9,7 +9,9 @@ CardItem::CardItem(const QString &themePath, const QString &imageFrontPath,
     : QGraphicsItem(),
       _imageFront{ QPixmap{ themePath + imageFrontPath }.scaled(boundingRect().size().toSize()) },
       _imageBack{ QPixmap{ themePath + imageBackPath }.scaled(boundingRect().size().toSize()) },
-      _modelId{ modelId }
+      _modelId{ modelId },
+      _imageFrontPath{ imageFrontPath },
+      _imageBackPath{ imageBackPath }
 {
 }
 
@@ -73,5 +75,12 @@ unsigned CardItem::modelId() const
 bool CardItem::isOpen() const
 {
     return _isOpen;
+}
+
+void CardItem::updateTheme(QString theme)
+{
+    _imageFront = QPixmap{ theme + _imageFrontPath }.scaled(boundingRect().size().toSize());
+    _imageBack = QPixmap{ theme + _imageBackPath }.scaled(boundingRect().size().toSize());
+    update();
 }
 } // namespace Scene
