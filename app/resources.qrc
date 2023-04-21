@@ -59,6 +59,59 @@
         <file>resources/dib.png</file>
         <file>resources/restart.png</file>
         <file>resources/new_game.jpeg</file>
+        <file>resources/darkMode/clubs/ace.png</file>
+        <file>resources/darkMode/clubs/eight.png</file>
+        <file>resources/darkMode/clubs/five.png</file>
+        <file>resources/darkMode/clubs/four.png</file>
+        <file>resources/darkMode/clubs/jack.png</file>
+        <file>resources/darkMode/clubs/king.png</file>
+        <file>resources/darkMode/clubs/nine.png</file>
+        <file>resources/darkMode/clubs/queen.png</file>
+        <file>resources/darkMode/clubs/seven.png</file>
+        <file>resources/darkMode/clubs/six.png</file>
+        <file>resources/darkMode/clubs/ten.png</file>
+        <file>resources/darkMode/clubs/three.png</file>
+        <file>resources/darkMode/clubs/two.png</file>
+        <file>resources/darkMode/diamonds/ace.png</file>
+        <file>resources/darkMode/diamonds/eight.png</file>
+        <file>resources/darkMode/diamonds/five.png</file>
+        <file>resources/darkMode/diamonds/four.png</file>
+        <file>resources/darkMode/diamonds/jack.png</file>
+        <file>resources/darkMode/diamonds/king.png</file>
+        <file>resources/darkMode/diamonds/nine.png</file>
+        <file>resources/darkMode/diamonds/queen.png</file>
+        <file>resources/darkMode/diamonds/seven.png</file>
+        <file>resources/darkMode/diamonds/six.png</file>
+        <file>resources/darkMode/diamonds/ten.png</file>
+        <file>resources/darkMode/diamonds/three.png</file>
+        <file>resources/darkMode/diamonds/two.png</file>
+        <file>resources/darkMode/hearts/ace.png</file>
+        <file>resources/darkMode/hearts/eight.png</file>
+        <file>resources/darkMode/hearts/five.png</file>
+        <file>resources/darkMode/hearts/four.png</file>
+        <file>resources/darkMode/hearts/jack.png</file>
+        <file>resources/darkMode/hearts/king.png</file>
+        <file>resources/darkMode/hearts/nine.png</file>
+        <file>resources/darkMode/hearts/queen.png</file>
+        <file>resources/darkMode/hearts/seven.png</file>
+        <file>resources/darkMode/hearts/six.png</file>
+        <file>resources/darkMode/hearts/ten.png</file>
+        <file>resources/darkMode/hearts/three.png</file>
+        <file>resources/darkMode/hearts/two.png</file>
+        <file>resources/darkMode/spades/ace.png</file>
+        <file>resources/darkMode/spades/eight.png</file>
+        <file>resources/darkMode/spades/five.png</file>
+        <file>resources/darkMode/spades/four.png</file>
+        <file>resources/darkMode/spades/jack.png</file>
+        <file>resources/darkMode/spades/king.png</file>
+        <file>resources/darkMode/spades/nine.png</file>
+        <file>resources/darkMode/spades/queen.png</file>
+        <file>resources/darkMode/spades/seven.png</file>
+        <file>resources/darkMode/spades/six.png</file>
+        <file>resources/darkMode/spades/ten.png</file>
+        <file>resources/darkMode/spades/three.png</file>
+        <file>resources/darkMode/spades/two.png</file>
+        <file>resources/darkMode/back_side.jpg</file>
     </qresource>
     <qresource prefix="/images/buttons">
         <file>resources/hit.png</file>
