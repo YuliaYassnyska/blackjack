@@ -10,6 +10,7 @@
 #include "items/players/dealer/dealer.h"
 #include "items/players/player/player.h"
 #include "items/popup/popup.h"
+#include "media/media.h"
 #include "model/controller/modelcontroller.h"
 #include "model/items/players/iplayer.h"
 
@@ -17,6 +18,7 @@
 #include <QGraphicsItemAnimation>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
+
 #include <QTimeLine>
 
 #include <algorithm>
@@ -39,7 +41,8 @@ SceneController::SceneController(QGraphicsScene *scene, ModelController *modelCo
                                       ":/images/resources/restart.png") },
       _newGamePopup{ new Scene::Popup([this]() { newGame(); },
                                       ":/images/resources/new_game.jpeg") },
-      _addCardTimer{ new QTimeLine(50, this) }
+      _addCardTimer{ new QTimeLine(50, this) },
+      _media{ new Scene::Media() }
 {
     connectSignals();
     createCards();
@@ -62,6 +65,7 @@ SceneController::~SceneController()
     delete _dibLabel;
     delete _restartPopup;
     delete _newGamePopup;
+    delete _media;
 }
 
 void SceneController::createCards()
@@ -281,6 +285,7 @@ void SceneController::summaryResults()
         _restartPopup->updateText(getResultText(_players.back()->result()));
         _restartPopup->show();
     }
+
     _cashLabel->updateContent();
 }
 
@@ -323,6 +328,7 @@ void SceneController::newGame()
     _newGamePopup->hide();
     _players.back()->resetCash();
     _cashLabel->updateContent();
+    setupMediaForPopup();
     startGame();
 }
 
@@ -357,4 +363,10 @@ void SceneController::onAddForDealer(Scene::Dealer *dealer)
     }
     addCardForPlayer(dealer);
     _addCardTimer->start();
+}
+
+void SceneController::setupMediaForPopup()
+{
+    _media->addMedia("qrc:/music/resources/background.mp3", 30);
+    _media->play();
 }

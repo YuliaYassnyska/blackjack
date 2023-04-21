@@ -49,6 +49,8 @@ set(PROJECT_SOURCES
     src/enums/resultEnums/resultenums.cpp
     src/gameScene/items/cashLabel/cashlabel.h
     src/gameScene/items/cashLabel/cashlabel.cpp
+    src/gameScene/media/media.h
+    src/gameScene/media/media.cpp
 )
 
 add_executable(${PROJECT_NAME}
@@ -56,6 +58,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
