@@ -14,6 +14,7 @@ class CardAnimator;
 class Popup;
 class Dealer;
 class CashLabel;
+class Media;
 } // namespace Scene
 class ModelController;
 
@@ -62,6 +63,8 @@ private:
     void addCardsForDealer(Scene::Dealer *dealer);
     void onAddForDealer(Scene::Dealer *dealer);
 
+    void setupMediaForPopup();
+
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
     ModelController *_modelController;
@@ -77,6 +80,7 @@ private:
     Scene::Popup *_restartPopup;
     Scene::CashLabel *_cashLabel{ nullptr };
     Scene::Popup *_newGamePopup;
+    Scene::Media *_media;
 
     QTimeLine *_addCardTimer{ nullptr };
 };
