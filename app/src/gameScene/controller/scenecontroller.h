@@ -45,6 +45,7 @@ private:
     void createPlayers();
     void addCashLabelToScene();
     void createNewGamePopup();
+    void createThemeButtons();
     void stand();
     void addCardAfterHit();
     void addCardForPlayer(Scene::IPlayer *player);
@@ -65,6 +66,9 @@ private:
 
     void setupMediaForPopup();
 
+    void setLightTheme();
+    void setDarkTheme();
+
     QGraphicsScene *_scene;
     std::vector<Scene::ICard *> _cards;
     ModelController *_modelController;
@@ -81,6 +85,8 @@ private:
     Scene::CashLabel *_cashLabel{ nullptr };
     Scene::Popup *_newGamePopup;
     Scene::Media *_media;
+    QGraphicsItem *_lightThemeButton;
+    QGraphicsItem *_darkThemeButton;
 
     QTimeLine *_addCardTimer{ nullptr };
 };

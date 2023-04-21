@@ -51,6 +51,8 @@ set(PROJECT_SOURCES
     src/gameScene/items/cashLabel/cashlabel.cpp
     src/gameScene/media/media.h
     src/gameScene/media/media.cpp
+    src/gameScene/items/themeItem/themeitem.h
+    src/gameScene/items/themeItem/themeitem.cpp
 )
 
 add_executable(${PROJECT_NAME}
