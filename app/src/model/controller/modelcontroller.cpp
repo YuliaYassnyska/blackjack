@@ -56,6 +56,15 @@ void ModelController::checkLoser(Model::IPlayer *player)
     if (player->score() > 21)
     {
         player->lose();
+
+        for (auto *el : _players)
+        {
+            if (el->id() != player->id())
+            {
+                el->win();
+            }
+        }
+
         emit roundEnd();
     }
 }
